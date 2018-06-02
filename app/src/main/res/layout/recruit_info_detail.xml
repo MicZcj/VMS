@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/app_primary_color">
+
+    <com.qmuiteam.qmui.widget.QMUITopBar
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/qmui_topbar_height" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/qmui_topbar_height"
+        android:background="@color/qmui_config_color_white">
+
+        <ScrollView
+            android:id="@+id/contentWrap"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/qmui_config_color_white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/qmui_config_color_white"
+                android:orientation="vertical"
+                android:padding="25dp">
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="姓名" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/name"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="叶茜雅" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="性别" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/sex"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="女" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="学院班级" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/stuclass"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="政管学院行管1702班" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="学号" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/stuid"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="201706051812" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="注册号" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/volid"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="319412661" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="手机长号" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/phone"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="17816110377" />
+
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="手机短号" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/phoneshort"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="17816110377" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="报名时间" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/time"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="2018-05-24 17:36:54.0" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="备注" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/note"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="5月30日（周三）;" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="报名日期" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/date"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="5月30日（周三）;" />
+
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</FrameLayout>

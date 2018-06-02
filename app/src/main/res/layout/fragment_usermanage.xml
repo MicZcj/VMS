@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?attr/app_primary_color">
+
+    <com.qmuiteam.qmui.widget.QMUITopBar
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/qmui_topbar_height" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/qmui_topbar_height"
+        android:background="@color/qmui_config_color_white">
+
+        <ScrollView
+            android:id="@+id/contentWrap"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/qmui_config_color_white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/qmui_config_color_white"
+                android:orientation="vertical"
+                android:padding="25dp">
+
+                <com.qmuiteam.qmui.widget.QMUIFontFitTextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="张昌健"
+                    android:textColor="@color/app_color_blue_2" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="Uid" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="1008" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="组织" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="浙江工业大学青年志愿者协会" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="权限" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:maxLines="4"
+                    android:text="活动招募 活动管理 工时查询 维护管理 红黑名单管理 超级管理" />
+
+                <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                    android:id="@+id/btn"
+                    style="@style/QMUI.RoundButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="51dp"
+                    android:layout_marginRight="51dp"
+                    android:layout_marginTop="10dp"
+                    android:text="退出系统"
+                    android:textColor="@color/qmui_config_color_red"
+                    app:qmui_borderColor="@color/qmui_config_color_red" />
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</FrameLayout>

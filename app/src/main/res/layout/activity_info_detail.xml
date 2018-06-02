@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/app_primary_color">
+
+    <com.qmuiteam.qmui.widget.QMUITopBar
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/qmui_topbar_height" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/qmui_topbar_height"
+        android:background="@color/qmui_config_color_white">
+
+        <ScrollView
+            android:id="@+id/contentWrap"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/qmui_config_color_white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/qmui_config_color_white"
+                android:orientation="vertical"
+                android:padding="25dp">
+
+                <com.qmuiteam.qmui.widget.QMUIFontFitTextView
+                    android:id="@+id/status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="工时表已提交"
+                    android:textColor="@color/app_color_blue_2" />
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="活动编号" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/num"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="101920" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="志愿汇ID" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/id"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="152720718681512c1eaa7993940e1bf1a65674a3c4b5e" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="活动名称" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/title"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="西溪湿地志愿者活动" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="组织方" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/deptname"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="浙江工业大学（注册）志愿者协会经贸分会" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="活动开始日期" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/actstarttime"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="2018-05-26" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="活动结束日期" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/actendtime"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="2018-05-27" />
+
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="活动详情" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/content"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="无权限" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="工时表" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/worksheet"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="无权限" />
+
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</FrameLayout>

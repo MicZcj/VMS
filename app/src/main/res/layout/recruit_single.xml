@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/app_primary_color">
+
+    <ScrollView
+        android:id="@+id/contentWrap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/qmui_config_color_white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/qmui_config_color_white"
+            android:orientation="vertical"
+            android:padding="25dp">
+
+            <TextView
+                style="@style/QDCommonTitle"
+                android:ellipsize="end"
+                android:text="活动名称" />
+
+            <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                android:id="@+id/name"
+                style="@style/QDCommonDescription"
+                android:gravity="left"
+                android:text="浙江图书馆志愿者活动" />
+
+            <TextView
+                style="@style/QDCommonTitle"
+                android:ellipsize="end"
+                android:text="组织方" />
+
+            <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                android:id="@+id/dept"
+                style="@style/QDCommonDescription"
+                android:gravity="left"
+                android:text="浙江工业大学（注册）志愿者协会" />
+
+            <TextView
+                style="@style/QDCommonTitle"
+                android:ellipsize="end"
+                android:text="活动地点" />
+
+            <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                android:id="@+id/address"
+                style="@style/QDCommonDescription"
+                android:gravity="left"
+                android:text="西湖区曙光路73号浙江图书馆" />
+
+            <TextView
+                style="@style/QDCommonTitle"
+                android:ellipsize="end"
+                android:text="活动时间" />
+
+            <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                android:id="@+id/time"
+                style="@style/QDCommonDescription"
+                android:gravity="left"
+                android:text="2018.05.29-2018.06.01（下周二至周五）下午13:00-16:00 " />
+
+            <TextView
+                style="@style/QDCommonTitle"
+                android:ellipsize="end"
+                android:text="需求人数" />
+
+            <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                android:id="@+id/num"
+                style="@style/QDCommonDescription"
+                android:gravity="left"
+                android:text="40" />
+
+            <TextView
+                style="@style/QDCommonTitle"
+                android:ellipsize="end"
+                android:text="活动详情" />
+
+            <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                android:id="@+id/content"
+                style="@style/QDCommonDescription"
+                android:gravity="left"
+                android:text="1.活动名称：浙江图书馆志愿者活动\n
+2.活动内容：图书数据加工、排架整理。  \n
+3.活动地点：西湖区曙光路73号浙江图书馆  \n
+4.活动时间：2018.05.29-2018.06.01（下周二至周五）下午13:00-16:00 \n
+5.需求人数：8人/天  \n
+6.工时认定：5个 （包括路上来回的时间） \n
+7.活动要求： \n
+①具体地点为西湖区曙光路73号，图书馆一楼总服务台处 \n
+②志愿者需在学校集合后自行前往集合地点参加志愿者活动，活动没有补贴，活动方不提供晚饭③要求志愿者有责任心、做事耐心细致；工作期间，要求遵守图书馆制度，维护图书馆形象，身穿志愿者红马甲，不迟到、不早退、不离岗、不扎堆聊天，注意行为规范；希望积极撰写工作总结，用于宣传报道。
+8.可报名时间：05月29日—06月01日  \n
+9.报名方式：关注校志协微信公众号右下角“活动报名”或直接点击阅读原文报名，填写详细的报名表 \n
+10.截止时间：名额有限，报满即止 " />
+
+            <TextView
+                style="@style/QDCommonTitle"
+                android:ellipsize="end"
+                android:text="联系方式" />
+
+            <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                android:id="@+id/phone"
+                style="@style/QDCommonDescription"
+                android:gravity="left"
+                android:text="冯同学（17306424698）" />
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

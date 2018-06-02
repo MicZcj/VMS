@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/app_primary_color">
+
+    <com.qmuiteam.qmui.widget.QMUITopBar
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/qmui_topbar_height" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/qmui_config_color_white"
+            android:layout_marginTop="?attr/qmui_topbar_height"
+            android:orientation="vertical"
+            android:padding="25dp">
+
+            <TextView
+                style="@style/QDCommonTitle"
+                android:ellipsize="end"
+                android:text="Uid" />
+
+            <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                style="@style/QDCommonDescription"
+                android:gravity="left"
+                android:text="1001" />
+
+            <TextView
+                style="@style/QDCommonTitle"
+                android:ellipsize="end"
+                android:text="姓名" />
+
+            <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                style="@style/QDCommonDescription"
+                android:gravity="left"
+                android:text="张忆霄" />
+
+            <TextView
+                style="@style/QDCommonTitle"
+                android:ellipsize="end"
+                android:text="部门" />
+
+            <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                style="@style/QDCommonDescription"
+                android:gravity="left"
+                android:text="浙江工业大学（注册）志愿者协会" />
+
+            <TextView
+                style="@style/QDCommonTitle"
+                android:ellipsize="end"
+                android:text="权限" />
+
+            <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                style="@style/QDCommonDescription"
+                android:gravity="left"
+                android:text="活动招募 活动管理 工时查询 维护管理 红黑名单管理 超级管理" />
+
+        </LinearLayout>
+</FrameLayout>

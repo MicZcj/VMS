@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/app_primary_color">
+
+    <com.qmuiteam.qmui.widget.QMUITopBar
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/qmui_topbar_height"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/qmui_topbar_height"
+        android:background="@color/qmui_config_color_white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/qmui_content_spacing_horizontal"
+            android:paddingRight="@dimen/qmui_content_spacing_horizontal">
+
+            <LinearLayout
+                style="@style/button_wrapper_style"
+                android:orientation="vertical">
+
+                <com.qmuiteam.qmui.widget.QMUIFontFitTextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="活动名称："
+                    android:textColor="@color/app_color_blue" />
+
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入活动名称"
+                    android:inputType="none"
+                    android:textSize="14sp" />
+
+                <com.qmuiteam.qmui.widget.QMUIFontFitTextView
+                    android:id="@+id/textView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="活动地址："
+                    android:textColor="@color/app_color_blue" />
+
+                <EditText
+                    android:id="@+id/address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="请输入活动地址"
+                    android:inputType="none"
+                    android:textSize="14sp" />
+
+                <com.qmuiteam.qmui.widget.QMUIFontFitTextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="活动时间："
+                    android:textColor="@color/app_color_blue" />
+
+                <EditText
+                    android:id="@+id/time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="请输入活动时间"
+                    android:inputType="none|textPersonName"
+                    android:textSize="14sp" />
+
+                <com.qmuiteam.qmui.widget.QMUIFontFitTextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="none|textMultiLine"
+                    android:text="需求人数："
+                    android:textColor="@color/app_color_blue" />
+
+                <EditText
+                    android:id="@+id/num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="请输入活动人数"
+                    android:inputType="number"
+                    android:textSize="14sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/button_wrapper_style"
+                android:orientation="vertical">
+
+                <com.qmuiteam.qmui.widget.QMUIFontFitTextView
+                    android:id="@+id/textView7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="活动详情："
+                    android:textColor="@color/app_color_blue" />
+
+                <EditText
+                    android:id="@+id/content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine" />
+
+                <com.qmuiteam.qmui.widget.textview.QMUISpanTouchFixTextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="*注：表单触发关键字：身份证、外语水平、服装尺码、志愿服务经历"
+                    android:textColor="@color/qmui_config_color_red" />
+
+
+            </LinearLayout>
+
+            <LinearLayout style="@style/button_wrapper_style"
+                android:orientation="vertical">
+                <com.qmuiteam.qmui.widget.QMUIFontFitTextView
+                    android:id="@+id/textView8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="可报名时间："
+                    android:textColor="@color/app_color_blue" />
+
+                <EditText
+                    android:id="@+id/selecttime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+
+                <com.qmuiteam.qmui.widget.textview.QMUISpanTouchFixTextView
+                    android:id="@+id/textView9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:text="*注：\n
+1. 如不需要选择请无需填写。如需提供可报名时间选择请输入格式为“时间1;时间2;时间3;时间4;时间5”，即每个时间以“;”（英文分号）间隔开。\n
+2. 此处请填写可以报名的活动日期或可以报名的活动时间段，不是开放招募的时间段。"
+                    android:textColor="@color/qmui_config_color_red" />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout style="@style/button_wrapper_style"
+                android:orientation="vertical">
+                <com.qmuiteam.qmui.widget.QMUIFontFitTextView
+                    android:id="@+id/textView10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="联系人："
+                    android:textColor="@color/app_color_blue" />
+
+                <EditText
+                    android:id="@+id/phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+
+            </LinearLayout>
+            <RelativeLayout style="@style/button_wrapper_style">
+
+                <Button
+                    android:id="@+id/recruit_submit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="提交"
+                    android:textColor="@color/qmui_s_link_color"
+                    style="@style/QDRadiusButton" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
