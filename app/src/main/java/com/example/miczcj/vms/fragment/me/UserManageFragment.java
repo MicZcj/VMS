@@ -33,7 +33,7 @@ public class UserManageFragment extends BaseFragment {
 
     @Override
     protected View onCreateView() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_recruit_activity_all, null);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_recruit_activity, null);
         ButterKnife.bind(this, view);
         mQDItemDescription = QDDataManager.getInstance().getDescription(this.getClass());
         initTopBar();

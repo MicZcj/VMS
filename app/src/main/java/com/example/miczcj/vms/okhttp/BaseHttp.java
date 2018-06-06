@@ -5,7 +5,7 @@ package com.example.miczcj.vms.okhttp;
  */
 
 public class BaseHttp {
-    final static String url = "http://10.80.93.138:8080/VMS_API/";
+    final static String url = "http://10.137.200.192:8080/VMS-API/";
 
     public static String getUrl() {
         return url;
