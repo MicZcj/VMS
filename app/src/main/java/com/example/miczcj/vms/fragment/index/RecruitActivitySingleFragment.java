@@ -181,7 +181,12 @@ public class RecruitActivitySingleFragment extends BaseFragment {
                                 break;
                             case 2:
                                 //修改活动招募,跳转到RecruitNewActivity
+                                Bundle bundle = new Bundle();
+                                bundle.putString("operation","edit");
+                                bundle.putString("id",id);
+                                bundle.putSerializable("recruitActivity",activity);
                                 QMUIFragment fragment = new RecruitActivityNewFragment();
+                                fragment.setArguments(bundle);
                                 startFragment(fragment);
                                 break;
                             case 3:

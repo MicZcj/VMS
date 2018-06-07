@@ -2,6 +2,7 @@ package com.example.miczcj.vms.fragment.index;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -16,14 +17,17 @@ import com.example.miczcj.vms.R;
 import com.example.miczcj.vms.base.BaseFragment;
 import com.example.miczcj.vms.manager.QDDataManager;
 import com.example.miczcj.vms.model.QDItemDescription;
+import com.example.miczcj.vms.model.RecruitActivity;
 import com.example.miczcj.vms.okhttp.BaseHttp;
 import com.example.miczcj.vms.okhttp.ResMessage;
 import com.google.gson.Gson;
+import com.qmuiteam.qmui.arch.QMUIFragment;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 
 import java.io.IOException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.Call;
@@ -59,18 +63,22 @@ public class RecruitActivityNewFragment extends BaseFragment {
     EditText phoneEdt;
 
 
-
+    private String operation;
+    private RecruitActivity ac;
 
     private QDItemDescription mQDItemDescription;
-    private String name ;
-    private  String address;
-    private String time ;
-    private String num ;
-    private String content ;
-    private String phone ;
-    private String selecttime ;
+    private String name;
+    private String address;
+    private String time;
+    private String num;
+    private String content;
+    private String phone;
+    private String selecttime;
     private ResMessage resMessage;
-    private Handler handler;
+    private String id;
+
+    private Handler handler = new Handler();
+    private Bundle bundle;
 
     @SuppressLint("HandlerLeak")
 
@@ -79,31 +87,52 @@ public class RecruitActivityNewFragment extends BaseFragment {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_recruit_activity_new, null);
         ButterKnife.bind(this, view);
         mQDItemDescription = QDDataManager.getInstance().getDescription(this.getClass());
-        handler = new Handler(){
-            @Override
-            public void handleMessage(Message msg){
-                final QMUITipDialog tipDialog;
-                if(msg.what==0){
-                    Toast.makeText(getContext(),"添加成功",Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(getContext(),"添加失败",Toast.LENGTH_SHORT).show();
-                }
+        bundle = getArguments();
+        try{
+            operation = (String)bundle.get("operation");
+            id = (String)bundle.get("id");
+        }catch(NullPointerException e){
+            operation= "new";
+        }
+        Log.i("opertaion的值是",operation);
 
-            }
-        };
         initTopBar();
         initContent();
         return view;
     }
+
     private void initContent() {
+        if(operation.equals("edit")){
+            ac = (RecruitActivity)bundle.getSerializable("recruitActivity");
+            new Thread(){
+                @Override
+                public void run() {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            nameEdt.setText(ac.getName());
+                            addressEdt.setText(ac.getAddress());
+                            timeEdt.setText(ac.getTime());
+                            numEdt.setText(ac.getNum());
+                            contentEdt.setText(ac.getContent());
+                            selecttimeEdt.setText(ac.getSelecttime());
+                            phoneEdt.setText(ac.getPhone());
+                            mTopBar.setTitle("修改招募信息");
+                        }
+                    });
+                }
+            }.start();
+
+        }
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                recruitPost();
+
+                    recruitPost();
             }
         });
     }
+
     private void initTopBar() {
         mTopBar.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +143,8 @@ public class RecruitActivityNewFragment extends BaseFragment {
 
         mTopBar.setTitle("志愿者活动招募");
     }
-    private void recruitPost(){
+
+    private void recruitPost() {
         BaseHttp baseHttp = new BaseHttp();
         name = nameEdt.getText().toString();
         address = addressEdt.getText().toString();
@@ -123,84 +153,138 @@ public class RecruitActivityNewFragment extends BaseFragment {
         content = contentEdt.getText().toString();
         phone = phoneEdt.getText().toString();
         selecttime = selecttimeEdt.getText().toString();
-        if(!valid()){
+        if (!valid()) {
             return;
         }
         SharedPreferences preference = getContext().getSharedPreferences("login_info", MODE_PRIVATE);
         String dept = preference.getString("dept", "");
         OkHttpClient okHttpClient = new OkHttpClient();
-        FormBody fromBody = new FormBody.Builder()
-                .add("name", name)
-                .add("address", address)
-                .add("time", time)
-                .add("num", num)
-                .add("content", content)
-                .add("phone", phone)
-                .add("selecttime", selecttime)
-                .add("dept", dept)
-                .build();
-        Request request = new Request.Builder()
-                .url(baseHttp.getUrl() + "APIRecruitActivityNew")
-                .post(fromBody)
-                .build();
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.i("新建志愿者活动招募失败", "未知原因！");
-                e.printStackTrace();
-            }
+        FormBody fromBody;
+        Request request;
+        if(operation.equals("new")){
+            fromBody = new FormBody.Builder()
+                    .add("name", name)
+                    .add("address", address)
+                    .add("time", time)
+                    .add("num", num)
+                    .add("content", content)
+                    .add("phone", phone)
+                    .add("selecttime", selecttime)
+                    .add("dept", dept)
+                    .build();
+            request = new Request.Builder()
+                    .url(baseHttp.getUrl() + "APIRecruitActivityNew")
+                    .post(fromBody)
+                    .build();
+            okHttpClient.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.i("新建志愿者活动招募失败", "未知原因！");
+                    e.printStackTrace();
+                }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                //TODO
-                String result = response.body().string();
-                Log.i("返回结果",result);
-                resMessage = new Gson().fromJson(result,ResMessage.class);
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.i("执行到这","4");
-                        Message msg = new Message();
-                        msg.what =resMessage.getCode();
-                        Log.i("执行到这",msg.what+"");
-                        handler.sendMessage(msg);
-                    }
-                });
-                thread.start();
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    //TODO
+                    String result = response.body().string();
+                    Log.i("返回结果", result);
+                    resMessage = new Gson().fromJson(result, ResMessage.class);
+                    Thread thread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getContext(), "添加成功", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    });
+                    thread.start();
 
-            }
-        });
+                }
+            });
+
+        }else{
+            fromBody = new FormBody.Builder()
+                    .add("id",id)
+                    .add("name", name)
+                    .add("address", address)
+                    .add("time", time)
+                    .add("num", num)
+                    .add("content", content)
+                    .add("phone", phone)
+                    .add("selecttime", selecttime)
+                    .add("dept", dept)
+                    .build();
+            request = new Request.Builder()
+                    .url(baseHttp.getUrl() + "APIRecruitAcitivityUpdate")
+                    .post(fromBody)
+                    .build();
+            okHttpClient.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String result = response.body().string();
+                    resMessage = new Gson().fromJson(result, ResMessage.class);
+                    Log.i("修改招募信息后返回的结果",result);
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getContext(),"修改招募信息成功！",Toast.LENGTH_SHORT).show();
+                                    popBackStack();
+                                    popBackStack();
+                                    popBackStack();
+                                    BaseFragment fragment = new ActivityAllFragment();
+                                    startFragment(fragment);
+                                }
+                            });
+                        }
+                    }.start();
+                }
+            });
+        }
+
+
     }
-    private boolean valid(){
-        if(name.equals("")){
-            Toast.makeText(getContext(),"活动名称不能为空",Toast.LENGTH_SHORT).show();
+
+    private boolean valid() {
+        if (name.equals("")) {
+            Toast.makeText(getContext(), "活动名称不能为空", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(name.length()>15){
-            Toast.makeText(getContext(),"活动名称不能超过15个字",Toast.LENGTH_SHORT).show();
+        } else if (name.length() > 15) {
+            Toast.makeText(getContext(), "活动名称不能超过15个字", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(address.equals("")){
-            Toast.makeText(getContext(),"活动地址不能为空",Toast.LENGTH_SHORT).show();
+        } else if (address.equals("")) {
+            Toast.makeText(getContext(), "活动地址不能为空", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(time.equals("")){
-            Toast.makeText(getContext(),"活动时间不能为空",Toast.LENGTH_SHORT).show();
+        } else if (time.equals("")) {
+            Toast.makeText(getContext(), "活动时间不能为空", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(num.equals("")){
-            Toast.makeText(getContext(),"需求人数不能为空",Toast.LENGTH_SHORT).show();
+        } else if (num.equals("")) {
+            Toast.makeText(getContext(), "需求人数不能为空", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(!num.matches("^[0-9]*$")){
-            Toast.makeText(getContext(),"需求人数必须为数字",Toast.LENGTH_SHORT).show();
+        } else if (!num.matches("^[0-9]*$")) {
+            Toast.makeText(getContext(), "需求人数必须为数字", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(content.equals("")){
-            Toast.makeText(getContext(),"活动详情不能为空",Toast.LENGTH_SHORT).show();
+        } else if (content.equals("")) {
+            Toast.makeText(getContext(), "活动详情不能为空", Toast.LENGTH_SHORT).show();
             return false;
 //        }else if(content.length()<50){
 //            Toast.makeText(getContext(),"活动详情至少50字",Toast.LENGTH_SHORT).show();
 //            return false;
-        }else if(selecttime.equals("")){
-            Toast.makeText(getContext(),"可报名时间不能为空",Toast.LENGTH_SHORT).show();
+        } else if (selecttime.equals("")) {
+            Toast.makeText(getContext(), "可报名时间不能为空", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(phone.equals("")){
-            Toast.makeText(getContext(),"联系人不能为空",Toast.LENGTH_SHORT).show();
+        } else if (phone.equals("")) {
+            Toast.makeText(getContext(), "联系人不能为空", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
