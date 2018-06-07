@@ -67,12 +67,6 @@ public class RecruitActivityAllFragment extends BaseFragment {
 
 
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.i("运行到这里","1");
-        doPost();
-    }
 
     private View view1;
     private View view2;
@@ -89,23 +83,13 @@ public class RecruitActivityAllFragment extends BaseFragment {
     private QDItemDescription mQDItemDescription;
     private PagerAdapter mPagerAdapter;
     private Handler handler =new Handler();
-//    private Handler handler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            super.handleMessage(msg);
-//            switch (msg.what) {
-//                case 1:
-//                    initListView(list1);
-//                    break;
-//                case 2:
-//                    initListView(list2);
-//
-//                default:
-//                    //其他情况
-//                    Toast.makeText(getContext(), "获取发生异常", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    };
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.i("运行到这里","1");
+        doPost();
+    }
 
     @Override
     protected View onCreateView() {
@@ -113,7 +97,6 @@ public class RecruitActivityAllFragment extends BaseFragment {
         ButterKnife.bind(this, root);
 
         mQDItemDescription = QDDataManager.getInstance().getDescription(this.getClass());
-        initTopBar();
         mPagerAdapter = new PagerAdapter() {
             @Override
             public int getCount() {
@@ -141,6 +124,7 @@ public class RecruitActivityAllFragment extends BaseFragment {
                 container.removeView((View) object);
             }
         };
+        initTopBar();
         initTabAndPager();
         /**
          * 查出来的 我的活动 用下面的方法加进入
@@ -160,7 +144,6 @@ public class RecruitActivityAllFragment extends BaseFragment {
 
         mTopBar.setTitle(mQDItemDescription.getName());
     }
-
 
     public static RecruitActivitySingleFragment newInstance(String id, String flag) {
         //数据传入

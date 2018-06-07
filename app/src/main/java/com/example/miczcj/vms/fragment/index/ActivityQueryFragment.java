@@ -1,7 +1,10 @@
 package com.example.miczcj.vms.fragment.index;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.lib.annotation.annotation.Widget;
 import com.example.miczcj.vms.R;
@@ -25,8 +28,12 @@ public class ActivityQueryFragment extends BaseFragment {
     QMUITopBar mTopBar;
     @BindView(R.id.activity_query_button)
     QMUIRoundButton mRoundBtn;
+    @BindView(R.id.id_name_query)
+    EditText nameEdt;
+
 
     private QDItemDescription mQDItemDescription;
+    private String name;
 
     @Override
     protected View onCreateView() {
@@ -34,13 +41,20 @@ public class ActivityQueryFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         mQDItemDescription = QDDataManager.getInstance().getDescription(this.getClass());
 
+
         initTopBar();
         mRoundBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(getContext(),"跳转到查询的结果",Toast.LENGTH_LONG).show();
-                //条件记得要设置 要查的的东西
+                name = nameEdt.getText().toString();
+                if(name.equals("")){
+                    Toast.makeText(getContext(),"输入为空",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Bundle bundle = new Bundle();
+                bundle.putString("name",name);
                 QMUIFragment fragment = new ActivityAllFragment();
+                fragment.setArguments(bundle);
                 startFragment(fragment);
             }
         });
