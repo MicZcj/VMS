@@ -1,5 +1,8 @@
 package com.example.miczcj.vms.fragment.index;
 
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,17 +14,31 @@ import com.example.lib.annotation.annotation.Widget;
 import com.example.miczcj.vms.R;
 import com.example.miczcj.vms.base.BaseFragment;
 import com.example.miczcj.vms.manager.QDDataManager;
+import com.example.miczcj.vms.model.List;
 import com.example.miczcj.vms.model.QDItemDescription;
+import com.example.miczcj.vms.okhttp.BaseHttp;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
 import com.qmuiteam.qmui.arch.QMUIFragment;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 //原本是 QMUIButton
 @Widget(name = "黄名单", iconRes = R.mipmap.list_yellow)
@@ -33,7 +50,19 @@ public class ListYellowFragment extends BaseFragment {
     ListView listView;
 
     private SimpleAdapter adapter;
+    private ArrayList<List> list = new ArrayList<List>();
+
+    private Handler handler = new Handler();
+    private Bundle bundle;
+    private BaseHttp baseHttp = new BaseHttp();
+    private OkHttpClient okHttpClient = new OkHttpClient();
     private QDItemDescription mQDItemDescription;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        doPost("2");
+    }
 
     @Override
     protected View onCreateView() {
@@ -65,38 +94,74 @@ public class ListYellowFragment extends BaseFragment {
         });
         mTopBar.setTitle(mQDItemDescription.getName());
     }
+
     private void initContent() {
         adapter = new SimpleAdapter(getContext(), getData(), R.layout.list_rby_item,
                 new String[]{"name", "stuNum", "description", "image"},
                 new int[]{R.id.name, R.id.stuNum, R.id.description, R.id.imageView});
-        listView.setAdapter(adapter);
-        //添加监听事件
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        new Thread(){
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //跳出对话框 确认是否删除
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        listView.setAdapter(adapter);
+                        //添加监听事件
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
+                                //跳出对话框 确认是否删除
+                            }
+                        });
+                    }
+                });
             }
-        });
+        }.start();
     }
-    public ArrayList<HashMap<String, Object>> getData() {
-        ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-        HashMap<String, Object> map;
-        String name[] = {"张昌健", "张忆霄"};
-        String stuNum[] = {"201507420139", "201526810851"};
-        String description[] = {"参与活动次数多，认真完成任务，礼貌接待需要帮助的人；作为领队，回馈及时认真 A",
-                "在这两个月中积极参加志愿者活动，从无迟到现象，并且在活动中表现良好，展现出良好的志愿者形象。" +
-                        "在活动中担任过领队，做好身为领队的工作 B"};
-        int image[] = {R.color.app_color_theme_1, R.color.app_color_theme_1};
 
-        for (int i = 0; i < 2; i++) {
+    public ArrayList<HashMap<String, Object>> getData() {
+        ArrayList<HashMap<String, Object>> returnList = new ArrayList<HashMap<String, Object>>();
+        HashMap<String, Object> map;
+
+        for (int i = 0; i < list.size(); i++) {
             map = new HashMap<String, Object>();
-            map.put("name", name[i]);
-            map.put("stuNum", stuNum[i]);
-            map.put("description", description[i]);
-            map.put("image", image[i]);
-            list.add(map);
+            map.put("name", list.get(i).getName());
+            map.put("stuNum", list.get(i).getNum());
+            map.put("description", list.get(i).getDcb());
+            map.put("image", R.color.app_color_theme_2);
+            returnList.add(map);
         }
 
-        return list;
+        return returnList;
+    }
+
+    private void doPost(String type){
+        FormBody formBody = new FormBody.Builder()
+                .add("type",type)
+                .build();
+        Request request = new Request.Builder()
+                .url(baseHttp.getUrl()+"APIListShow")
+                .post(formBody)
+                .build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String result = response.body().string();
+                JsonElement je = new JsonParser().parse(result);
+                JsonObject jo = je.getAsJsonObject();
+                JsonArray ja = jo.getAsJsonArray("list");
+                Gson gson = new Gson();
+                for(JsonElement l : ja){
+                    List temp = gson.fromJson(l,List.class);
+                    list.add(temp);
+                }
+                initContent();
+            }
+        });
     }
 }

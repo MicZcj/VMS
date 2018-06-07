@@ -14,7 +14,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_margin="10dp"
-        app:srcCompat="@color/app_color_theme_1" />
+        app:srcCompat="@color/app_color_theme_2" />
 
     <TextView
         android:id="@+id/name"
