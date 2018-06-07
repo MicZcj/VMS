@@ -162,10 +162,11 @@ public class RecruitActivityAllFragment extends BaseFragment {
     }
 
 
-    public static RecruitActivitySingleFragment newInstance(String id) {
+    public static RecruitActivitySingleFragment newInstance(String id, String flag) {
         //数据传入
         Bundle args = new Bundle();
         args.putString("id",id);
+        args.putString("flag",flag);
         RecruitActivitySingleFragment fragment = new RecruitActivitySingleFragment();
         fragment.setArguments(args);
         return fragment;
@@ -218,7 +219,8 @@ public class RecruitActivityAllFragment extends BaseFragment {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             String id1 = list1.get(position).getId();
-                            QMUIFragment fragment = newInstance(id1);
+                            String flag1 = list1.get(position).getFlag();
+                            QMUIFragment fragment = newInstance(id1,flag1);
                             startFragment(fragment);
                             //Toast.makeText(getContext(),id1,Toast.LENGTH_SHORT).show();
                         }
@@ -228,7 +230,8 @@ public class RecruitActivityAllFragment extends BaseFragment {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             String id2 = list2.get(position).getId();
-                            QMUIFragment fragment = newInstance(id2);
+                            String flag2 = list2.get(position).getFlag();
+                            QMUIFragment fragment = newInstance(id2,flag2);
                             startFragment(fragment);
                            // Toast.makeText(getContext(),id2,Toast.LENGTH_SHORT).show();
                         }
@@ -240,18 +243,6 @@ public class RecruitActivityAllFragment extends BaseFragment {
                 }
             }
         }).start();
-
-//        okHttpClient.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//
-//            }
-//        });
     }
 
     private void initListView(ArrayList<RecruitActivity> list,int i) {

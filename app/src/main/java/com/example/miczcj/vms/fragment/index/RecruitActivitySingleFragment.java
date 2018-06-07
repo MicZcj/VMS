@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,8 +84,12 @@ public class RecruitActivitySingleFragment extends BaseFragment {
     private ArrayList<RecruitStudent> list  = new ArrayList<>();
 
     private String id;
+    private String flag;
 
     private Handler handler = new Handler();
+
+    OkHttpClient okHttpClient = new OkHttpClient();
+    BaseHttp baseHttp = new BaseHttp();
 
     private Map<ContentPage, View> mPageMap = new HashMap<>();
     private ContentPage mDestPage = ContentPage.Item1;
@@ -119,8 +124,10 @@ public class RecruitActivitySingleFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
-
         id = (String)bundle.get("id");
+        flag = (String)bundle.get("flag");
+        Log.i("id的值",id);
+        Log.i("flag的值",flag);
         doPost();
     }
 
@@ -167,10 +174,10 @@ public class RecruitActivitySingleFragment extends BaseFragment {
                         dialog.dismiss();
                         switch (position) {
                             case 0:
-                                //开启活动招募
+                                doPostOpenOrCloseRecruit();
                                 break;
                             case 1:
-                                //停止活动招募
+                                doPostOpenOrCloseRecruit();
                                 break;
                             case 2:
                                 //修改活动招募,跳转到RecruitNewActivity
@@ -179,6 +186,7 @@ public class RecruitActivitySingleFragment extends BaseFragment {
                                 break;
                             case 3:
                                 //删除本招募信息
+                                doPostDeleteRecruit();
                                 break;
                             case 4:
                                 break;
@@ -283,8 +291,6 @@ public class RecruitActivitySingleFragment extends BaseFragment {
     }
 
     private void doPost(){
-        BaseHttp baseHttp = new BaseHttp();
-        OkHttpClient okHttpClient = new OkHttpClient();
         FormBody formBody = new FormBody.Builder()
                 .add("id",id)
                 .build();
@@ -317,19 +323,12 @@ public class RecruitActivitySingleFragment extends BaseFragment {
 
                 initPage1();
                 initPage2();
-                //设置page2的item监听事件
-                listview2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        RecruitStudent rs = list.get(position);
-                        QMUIFragment fragment = newInstance(rs);
-                        startFragment(fragment);
-                    }
-                });
+
 
             }
         });
     }
+
     private void initPage1(){
         new Thread(){
             @Override
@@ -350,6 +349,7 @@ public class RecruitActivitySingleFragment extends BaseFragment {
             }
         }.start();
     }
+
     private void initPage2(){
         adapter = new SimpleAdapter(getContext(),getData(list),R.layout.list_activity_item,
                 new String[]{"name","num"},
@@ -360,13 +360,23 @@ public class RecruitActivitySingleFragment extends BaseFragment {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                       listview2.setAdapter(adapter);
+                        listview2.setAdapter(adapter);
+                        //设置page2的item监听事件
+                        listview2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                RecruitStudent rs = list.get(position);
+                                QMUIFragment fragment = newInstance(rs);
+                                startFragment(fragment);
+                            }
+                        });
                        adapter.notifyDataSetChanged();
                     }
                 });
             }
         }.start();
     }
+
     private ArrayList<HashMap<String, Object>> getData(ArrayList<RecruitStudent> asList){
         ArrayList<HashMap<String, Object>> returnList = new ArrayList<HashMap<String, Object>>();
         HashMap<String, Object> map;
@@ -378,6 +388,7 @@ public class RecruitActivitySingleFragment extends BaseFragment {
         }
         return returnList;
     }
+
     public static RecruitInfoFragment newInstance(RecruitStudent rs) {
         //数据传入
         Bundle args = new Bundle();
@@ -385,5 +396,92 @@ public class RecruitActivitySingleFragment extends BaseFragment {
         RecruitInfoFragment fragment = new RecruitInfoFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    private void doPostOpenOrCloseRecruit(){
+        FormBody formBody = new FormBody.Builder()
+                .add("id",id)
+                .add("flag",flag)
+                .build();
+        Request request = new Request.Builder()
+                .url(baseHttp.getUrl()+"APIRecruitActivityOpenAndClose")
+                .post(formBody)
+                .build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String result = response.body().string();
+                Gson gson = new Gson();
+                JsonElement je = new JsonParser().parse(result);
+                Log.i("返回的result结果",result);
+                JsonObject jsonObject = je.getAsJsonObject();
+                if(jsonObject.get("code").toString().equals("0")){
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getContext(),"成功开启活动",Toast.LENGTH_SHORT).show();
+                                    popBackStack();
+                                    popBackStack();
+                                }
+                            });
+                        }
+                    }.start();
+
+                }else{
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getContext(),"成功停止活动",Toast.LENGTH_SHORT).show();
+                                    popBackStack();
+                                    popBackStack();
+                                }
+                            });
+                        }
+                    }.start();
+                }
+
+            }
+        });
+    }
+
+    private void doPostDeleteRecruit(){
+        FormBody formBody = new FormBody.Builder()
+                .add("id",id)
+                .build();
+        Request request = new Request.Builder()
+                .url(baseHttp.getUrl()+"APIRecruitActivityHide")
+                .post(formBody)
+                .build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String result = response.body().string();
+                Gson gson = new Gson();
+                JsonElement je = new JsonParser().parse(result);
+                JsonObject jsonObject = je.getAsJsonObject();
+                if(jsonObject.get("code").toString().equals("0")){
+                    Toast.makeText(getContext(),"招募已删除",Toast.LENGTH_SHORT).show();
+                    popBackStack();
+                }else{
+                    Toast.makeText(getContext(),"招募删除失败",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }
