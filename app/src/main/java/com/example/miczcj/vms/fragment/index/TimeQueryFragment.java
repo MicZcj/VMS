@@ -1,8 +1,10 @@
 package com.example.miczcj.vms.fragment.index;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.lib.annotation.annotation.Widget;
 import com.example.miczcj.vms.R;
@@ -26,24 +28,31 @@ public class TimeQueryFragment extends BaseFragment {
     @BindView(R.id.activity_query_button)
     QMUIRoundButton mRoundBtn;
     @BindView(R.id.id_name_query)
-    EditText editText;
+    EditText idEdt;
 
     private QDItemDescription mQDItemDescription;
+    private String id;
 
     @Override
     protected View onCreateView() {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_activity_time_query, null);
         ButterKnife.bind(this, view);
-        editText.setHint("请输入学号");
+        idEdt.setHint("请输入学号");
         mQDItemDescription = QDDataManager.getInstance().getDescription(this.getClass());
 
         initTopBar();
         mRoundBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(getContext(),"跳转到查询的结果",Toast.LENGTH_LONG).show();
-                //条件记得要设置 要查的的东西
+                id = idEdt.getText().toString();
+                if(id.equals("")){
+                    Toast.makeText(getContext(),"输入为空",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Bundle bundle = new Bundle();
+                bundle.putString("id",id);
                 QMUIFragment fragment = new TimeResultFragment();
+                fragment.setArguments(bundle);
                 startFragment(fragment);
             }
         });

@@ -2,6 +2,9 @@ package com.example.miczcj.vms.fragment.index;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.view.Gravity;
@@ -16,17 +19,31 @@ import com.example.miczcj.vms.R;
 import com.example.miczcj.vms.base.BaseFragment;
 import com.example.miczcj.vms.fragment.index.viewpager.CardTransformer;
 import com.example.miczcj.vms.manager.QDDataManager;
+import com.example.miczcj.vms.model.Time;
+import com.example.miczcj.vms.okhttp.BaseHttp;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUIPagerAdapter;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.QMUIViewPager;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 @Widget(name = "查询结果")
 public class TimeResultFragment extends BaseFragment {
@@ -35,22 +52,42 @@ public class TimeResultFragment extends BaseFragment {
     @BindView(R.id.pager)
     QMUIViewPager mViewPager;
 
+    private QMUIPagerAdapter pagerAdapter;
     private List<String> mItems = new ArrayList<>();
+    private ArrayList<Time> list = new ArrayList<Time>();
+    private String id;
 
+    private OkHttpClient okHttpClient = new OkHttpClient();
+    private BaseHttp baseHttp = new BaseHttp();
+    private Handler handler =new Handler();
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        id = (String)bundle.get("id");
+        doPost();
+
+    }
 
     @Override
     protected View onCreateView() {
         FrameLayout layout = (FrameLayout) LayoutInflater.from(getActivity()).inflate(R.layout.fragment_loop_viewpager, null);
         ButterKnife.bind(this, layout);
-        initData(5);
         initTopBar();
         initPagers();
         return layout;
     }
 
     private void initData(int count) {
-        for (int i = 1; i < count; i++) {
-            mItems.add("序号："+i + "\n张昌健\n健行学院1502班\n201507420139\n9.0\n灵隐寺志愿者活动\n2018.04.05");
+        for (int i = 0; i < count; i++) {
+            mItems.add("序号："+(i+1) + "\n" +
+                    list.get(i).getName()+"\n" +
+                    list.get(i).getStuclass()+"\n" +
+                    list.get(i).getStuid()+"\n" +
+                    list.get(i).getWorknum()+"\n" +
+                    list.get(i).getActivity()+"\n" +
+                    list.get(i).getTime());
         }
     }
 
@@ -66,47 +103,88 @@ public class TimeResultFragment extends BaseFragment {
 
 
     private void initPagers() {
-        QMUIPagerAdapter pagerAdapter = new QMUIPagerAdapter() {
-
+        new Thread(){
             @Override
-            public boolean isViewFromObject(View view, Object object) {
-                return view == object;
+            public void run() {
+                handler.post(new Runnable() {
+                     @Override
+                     public void run() {
+                        pagerAdapter = new QMUIPagerAdapter() {
+
+                            @Override
+                            public boolean isViewFromObject(View view, Object object) {
+                                return view == object;
+                            }
+
+                            @Override
+                            public int getCount() {
+                                return mItems.size();
+                            }
+
+                            @Override
+                            public CharSequence getPageTitle(int position) {
+                                return mItems.get(position);
+                            }
+
+                            @Override
+                            protected Object hydrate(ViewGroup container, int position) {
+                                return new ItemView(getContext());
+                            }
+
+                            @Override
+                            protected void populate(ViewGroup container, Object item, int position) {
+                                ItemView itemView = (ItemView) item;
+                                itemView.setText(mItems.get(position));
+                                container.addView(itemView);
+                            }
+
+                            @Override
+                            protected void destroy(ViewGroup container, int position, Object object) {
+                                container.removeView((View) object);
+                            }
+                        };
+                        //setPageTransformer默认采用ViewCompat.LAYER_TYPE_HARDWARE， 但它在某些4.x的国产机下会crash
+                        boolean canUseHardware = Build.VERSION.SDK_INT >= 21;
+                        mViewPager.setPageTransformer(false, new CardTransformer(),
+                                canUseHardware ? ViewCompat.LAYER_TYPE_HARDWARE : ViewCompat.LAYER_TYPE_SOFTWARE);
+                        mViewPager.setInfiniteRatio(500);
+                        mViewPager.setEnableLoop(true);
+                        mViewPager.setAdapter(pagerAdapter);
+                     }
+                });
+            }
+        }.start();
+    }
+
+    private void doPost(){
+        FormBody formBody = new FormBody.Builder()
+                .add("id",id)
+                .build();
+        Request request = new Request.Builder()
+                .url(baseHttp.getUrl()+"APIWorkTimeQuery")
+                .post(formBody)
+                .build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
             }
 
             @Override
-            public int getCount() {
-                return mItems.size();
+            public void onResponse(Call call, Response response) throws IOException {
+                String result = response.body().string();
+                JsonElement je = new JsonParser().parse(result);
+                JsonObject jo = je.getAsJsonObject();
+                JsonArray ja = jo.getAsJsonArray("list");
+                Gson gson = new Gson();
+                for(JsonElement time : ja){
+                    Time t = gson.fromJson(time,Time.class);
+                    list.add(t);
+                }
+                initData(list.size());
+                initPagers();
             }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return mItems.get(position);
-            }
-
-            @Override
-            protected Object hydrate(ViewGroup container, int position) {
-                return new ItemView(getContext());
-            }
-
-            @Override
-            protected void populate(ViewGroup container, Object item, int position) {
-                ItemView itemView = (ItemView) item;
-                itemView.setText(mItems.get(position));
-                container.addView(itemView);
-            }
-
-            @Override
-            protected void destroy(ViewGroup container, int position, Object object) {
-                container.removeView((View) object);
-            }
-        };
-        //setPageTransformer默认采用ViewCompat.LAYER_TYPE_HARDWARE， 但它在某些4.x的国产机下会crash
-        boolean canUseHardware = Build.VERSION.SDK_INT >= 21;
-        mViewPager.setPageTransformer(false, new CardTransformer(),
-                canUseHardware ? ViewCompat.LAYER_TYPE_HARDWARE : ViewCompat.LAYER_TYPE_SOFTWARE);
-        mViewPager.setInfiniteRatio(500);
-        mViewPager.setEnableLoop(true);
-        mViewPager.setAdapter(pagerAdapter);
+        });
     }
 
     static class ItemView extends FrameLayout {
