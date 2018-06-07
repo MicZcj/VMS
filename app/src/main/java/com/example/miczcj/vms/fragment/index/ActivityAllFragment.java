@@ -200,6 +200,7 @@ public class ActivityAllFragment extends BaseFragment {
 
 
     }
+
     public static ActivityInfoFragment newInstance(String num, String dept) {
         //数据传入
         Bundle args = new Bundle();

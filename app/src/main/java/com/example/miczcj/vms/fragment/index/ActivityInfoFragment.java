@@ -1,5 +1,6 @@
 package com.example.miczcj.vms.fragment.index;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import com.example.miczcj.vms.R;
 import com.example.miczcj.vms.base.BaseFragment;
 import com.example.miczcj.vms.model.VolunteerActivity;
 import com.example.miczcj.vms.okhttp.BaseHttp;
+import com.example.miczcj.vms.okhttp.ResMessage;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -36,6 +38,8 @@ import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by MicZcj on 2018/5/27.
@@ -68,9 +72,12 @@ public class ActivityInfoFragment extends BaseFragment {
 
     private String dept;
     private String num;
+    private String approval;
+    private String name;
+    private ResMessage resMessage;
+    private CharSequence text = "";
     private VolunteerActivity va;
-    private String workSheet;
-
+    private String workSheet= "";
     private Handler handler = new Handler();
     private OkHttpClient okHttpClient = new OkHttpClient();
     private BaseHttp baseHttp = new BaseHttp();
@@ -81,7 +88,18 @@ public class ActivityInfoFragment extends BaseFragment {
         Bundle bundle = getArguments();
         num = (String)bundle.get("num");
         dept = (String)bundle.get("dept");
+        approval = (String)bundle.get("approval");
+        if (num==null){
+            num = "not";
+        }
+        if (dept==null){
+            dept = "not";
+        }
+        if(approval==null){
+            approval = "not";
+        }
         doPost();
+
     }
     @Override
     public View onCreateView() {
@@ -127,14 +145,16 @@ public class ActivityInfoFragment extends BaseFragment {
                 popBackStack();
             }
         });
-        QMUIAlphaImageButton temp = mTopBar.addRightImageButton(R.mipmap.activity_approval, R.id.topbar_right_approval_button);
-        temp.setScaleType(ImageButton.ScaleType.CENTER_INSIDE);
-        temp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showEditTextDialog();
-            }
-        });
+        if(approval.equals("approval")) {
+            QMUIAlphaImageButton temp = mTopBar.addRightImageButton(R.mipmap.activity_approval, R.id.topbar_right_approval_button);
+            temp.setScaleType(ImageButton.ScaleType.CENTER_INSIDE);
+            temp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showEditTextDialog();
+                }
+            });
+        }
         //设置标题
 
     }
@@ -143,22 +163,34 @@ public class ActivityInfoFragment extends BaseFragment {
         final QMUIDialog.EditTextDialogBuilder builder = new QMUIDialog.EditTextDialogBuilder(getActivity());
         builder.setTitle("活动审批")
                 .setPlaceholder("在此输入审批意见")
-                .setInputType(InputType.TYPE_CLASS_TEXT)
-                .addAction("取消", new QMUIDialogAction.ActionListener() {
-                    @Override
-                    public void onClick(QMUIDialog dialog, int index) {
-                        dialog.dismiss();
-                    }
-                });
-
-            builder.addAction("确定", new QMUIDialogAction.ActionListener() {
-                @Override
-                public void onClick(QMUIDialog dialog, int index) {
-                    CharSequence text = builder.getEditText().getText();
-                        Toast.makeText(getActivity(), "审批通过", Toast.LENGTH_SHORT).show();
+                .setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.addAction(0,"不通过", QMUIDialogAction.ACTION_PROP_NEGATIVE, new QMUIDialogAction.ActionListener() {
+            @Override
+            public void onClick(QMUIDialog dialog, int index) {
+                text = builder.getEditText().getText();
+                if (text != null && text.length() > 0) {
+                    doPostApproval("12");
+                    dialog.dismiss();
+                } else {
+                    Toast.makeText(getActivity(), "请输入审批意见", Toast.LENGTH_SHORT).show();
                 }
-            }).create(mCurrentDialogStyle).show();
-        }
+
+            }
+        }).create(mCurrentDialogStyle).show();
+
+        builder.addAction("通过", new QMUIDialogAction.ActionListener() {
+            @Override
+            public void onClick(QMUIDialog dialog, int index) {
+                text = builder.getEditText().getText();
+                if (text != null && text.length() > 0) {
+
+                    dialog.dismiss();
+                } else {
+                    Toast.makeText(getActivity(), "请输入审批意见", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).create(mCurrentDialogStyle).show();
+    }
 
     private void doPost(){
         FormBody formBody = new FormBody.Builder()
@@ -186,6 +218,49 @@ public class ActivityInfoFragment extends BaseFragment {
                 initContent();
             }
         });
+    }
+
+    private void doPostApproval(String status){
+        SharedPreferences preferences = getContext().getSharedPreferences("login_info", MODE_PRIVATE);
+        name = preferences.getString("name","");
+        FormBody formBody = new FormBody.Builder()
+                .add("stauts",status)
+                .add("name",name)
+                .add("num",num)
+                .add("content",text.toString())
+                .build();
+        Request request = new Request.Builder()
+                .url(baseHttp.getUrl()+"APIAdminActivitySave")
+                .post(formBody)
+                .build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String result = response.body().string();
+                Gson gson = new Gson();
+                resMessage = gson.fromJson(result,ResMessage.class);
+                showResult();
+            }
+        });
+    }
+
+    private void showResult(){
+        new Thread(){
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(),resMessage.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        }.start();
     }
 
 }
