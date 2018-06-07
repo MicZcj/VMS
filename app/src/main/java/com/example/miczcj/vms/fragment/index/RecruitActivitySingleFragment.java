@@ -476,10 +476,31 @@ public class RecruitActivitySingleFragment extends BaseFragment {
                 JsonElement je = new JsonParser().parse(result);
                 JsonObject jsonObject = je.getAsJsonObject();
                 if(jsonObject.get("code").toString().equals("0")){
-                    Toast.makeText(getContext(),"招募已删除",Toast.LENGTH_SHORT).show();
-                    popBackStack();
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getContext(),"招募已删除",Toast.LENGTH_SHORT).show();
+                                    popBackStack();
+                                    popBackStack();
+                                }
+                            });
+                        }
+                    }.start();
                 }else{
-                    Toast.makeText(getContext(),"招募删除失败",Toast.LENGTH_SHORT).show();
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getContext(),"招募删除失败",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }.start();
                 }
             }
         });
