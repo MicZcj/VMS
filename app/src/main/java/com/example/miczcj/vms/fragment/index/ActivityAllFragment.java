@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -186,7 +187,26 @@ public class ActivityAllFragment extends BaseFragment {
                     list.add(va);
                 }
                 initContent();
+                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String num = list.get(position).getNum();
+                        QMUIFragment fragment = newInstance(num,dept);
+                        startFragment(fragment);
+                    }
+                });
             }
         });
+
+
+    }
+    public static ActivityInfoFragment newInstance(String num, String dept) {
+        //数据传入
+        Bundle args = new Bundle();
+        args.putString("num",num);
+        args.putString("dept",dept);
+        ActivityInfoFragment fragment = new ActivityInfoFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 }

@@ -97,7 +97,7 @@ public class RecruitActivityNewFragment extends BaseFragment {
         Log.i("opertaion的值是",operation);
 
         initTopBar();
-        initContent();
+//        initContent();
         return view;
     }
 

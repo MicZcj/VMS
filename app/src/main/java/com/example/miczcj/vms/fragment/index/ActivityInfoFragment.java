@@ -1,6 +1,10 @@
 package com.example.miczcj.vms.fragment.index;
 
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -8,14 +12,30 @@ import android.widget.Toast;
 
 import com.example.miczcj.vms.R;
 import com.example.miczcj.vms.base.BaseFragment;
+import com.example.miczcj.vms.model.VolunteerActivity;
+import com.example.miczcj.vms.okhttp.BaseHttp;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
+import com.qmuiteam.qmui.alpha.QMUIAlphaTextView;
+import com.qmuiteam.qmui.widget.QMUIFontFitTextView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
 
+import java.io.IOException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by MicZcj on 2018/5/27.
@@ -24,25 +44,80 @@ import butterknife.ButterKnife;
 public class ActivityInfoFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
+    @BindView(R.id.status)
+    QMUIFontFitTextView statusTxt;
+    @BindView(R.id.num)
+    QMUIAlphaTextView numTxt;
+    @BindView(R.id.id)
+    QMUIAlphaTextView idTxt;
+    @BindView(R.id.title)
+    QMUIAlphaTextView titleTxt;
+    @BindView(R.id.deptname)
+    QMUIAlphaTextView deptnameTxt;
+    @BindView(R.id.actstarttime)
+    QMUIAlphaTextView actstarttimeTxt;
+    @BindView(R.id.actendtime)
+    QMUIAlphaTextView actendtimeTxt;
+    @BindView(R.id.content)
+    QMUIAlphaTextView contentTxt;
+    @BindView(R.id.worksheet)
+    QMUIAlphaTextView worksheetTxt;
+
 
     private int mCurrentDialogStyle = R.style.DialogTheme2;
 
+    private String dept;
+    private String num;
+    private VolunteerActivity va;
+    private String workSheet;
+
+    private Handler handler = new Handler();
+    private OkHttpClient okHttpClient = new OkHttpClient();
+    private BaseHttp baseHttp = new BaseHttp();
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        num = (String)bundle.get("num");
+        dept = (String)bundle.get("dept");
+        doPost();
+    }
     @Override
     public View onCreateView() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.activity_info_detail, null);
         ButterKnife.bind(this, view);
         initTopBar();
-        initContent();
+//        initContent();
         return view;
     }
 
     private void initContent() {
-        //志愿者活动策划的内容这里写进去
-        /**
-         * 如果是活动审批跳到这里
-         * 要设置 工时表已提交
-         * 要添加 审批按钮（用对话框实现）或者 单选框
-         */
+        new Thread(){
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(va.getStauts().equals("审核未通过")||va.getStauts().equals("工时表超时未交")){
+                            statusTxt.setTextColor(getResources().getColor(R.color.app_color_theme_1));
+                        }else if(va.getStauts().equals("工时表等待提交")||va.getStauts().equals("待审核")){
+                            statusTxt.setTextColor(getResources().getColor(R.color.app_color_theme_2));
+                        }
+                        statusTxt.setText(va.getStauts());
+                        numTxt.setText(va.getNum());
+                        idTxt.setText(va.getId());
+                        titleTxt.setText(va.getTitle());
+                        deptnameTxt.setText(va.getDeptname());
+                        actstarttimeTxt.setText(va.getActstarttime());
+                        actendtimeTxt.setText(va.getActendtime());
+                        contentTxt.setText(va.getActendtime());
+                        worksheetTxt.setText(workSheet);
+                        mTopBar.setTitle(va.getTitle());
+                    }
+                });
+            }
+        }.start();
     }
 
     private void initTopBar() {
@@ -61,9 +136,9 @@ public class ActivityInfoFragment extends BaseFragment {
             }
         });
         //设置标题
-        mTopBar.setTitle("西溪湿地志愿者活动");
 
     }
+
     private void showEditTextDialog() {
         final QMUIDialog.EditTextDialogBuilder builder = new QMUIDialog.EditTextDialogBuilder(getActivity());
         builder.setTitle("活动审批")
@@ -84,5 +159,33 @@ public class ActivityInfoFragment extends BaseFragment {
                 }
             }).create(mCurrentDialogStyle).show();
         }
+
+    private void doPost(){
+        FormBody formBody = new FormBody.Builder()
+                .add("num",num)
+                .add("dept",dept)
+                .build();
+        Request request = new Request.Builder()
+                .url(baseHttp.getUrl()+"APIAcitivityShowSingle")
+                .post(formBody)
+                .build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String result = response.body().string();
+                JsonElement je = new JsonParser().parse(result);
+                JsonObject jo = je.getAsJsonObject();
+                Gson gson = new Gson();
+                va = gson.fromJson(jo.getAsJsonObject("activity"),VolunteerActivity.class);
+                workSheet = jo.get("workSheet").toString();
+                initContent();
+            }
+        });
+    }
 
 }
