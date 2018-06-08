@@ -198,29 +198,30 @@ public class RecruitActivityAllFragment extends BaseFragment {
                     }
                     initListView(list1,1);
                     initListView(list2,2);
-                    listview1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            String id1 = list1.get(position).getId();
-                            String flag1 = list1.get(position).getFlag();
-                            QMUIFragment fragment = newInstance(id1,flag1);
-                            startFragment(fragment);
-                            //Toast.makeText(getContext(),id1,Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                    listview2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            String id2 = list2.get(position).getId();
-                            String flag2 = list2.get(position).getFlag();
-                            QMUIFragment fragment = newInstance(id2,flag2);
-                            startFragment(fragment);
-                           // Toast.makeText(getContext(),id2,Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    Log.i("list1大小",list1.size()+"");
-                    Log.i("list2大小",list2.size()+"");
+                    if(!list1.isEmpty()) {
+                        listview1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                String id1 = list1.get(position).getId();
+                                String flag1 = list1.get(position).getFlag();
+                                QMUIFragment fragment = newInstance(id1, flag1);
+                                startFragment(fragment);
+                                //Toast.makeText(getContext(),id1,Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    if(!list2.isEmpty()) {
+                        listview2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                String id2 = list2.get(position).getId();
+                                String flag2 = list2.get(position).getFlag();
+                                QMUIFragment fragment = newInstance(id2, flag2);
+                                startFragment(fragment);
+                                // Toast.makeText(getContext(),id2,Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 }catch(IOException e){
                     e.printStackTrace();
                 }
@@ -263,7 +264,7 @@ public class RecruitActivityAllFragment extends BaseFragment {
         for (RecruitActivity ac : acList) {
             map = new HashMap<String, Object>();
             map.put("name", ac.getName());
-            map.put("num", ac.getNum() + "人");
+            map.put("num", ac.getHave()+"/"+ ac.getNum() + "人");
             list.add(map);
         }
         Log.i("ArrayList大小",list.size()+"");

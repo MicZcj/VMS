@@ -24,6 +24,7 @@
                 android:text="Uid" />
 
             <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                android:id="@+id/uid"
                 style="@style/QDCommonDescription"
                 android:gravity="left"
                 android:text="1001" />
@@ -34,6 +35,7 @@
                 android:text="姓名" />
 
             <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                android:id="@+id/name"
                 style="@style/QDCommonDescription"
                 android:gravity="left"
                 android:text="张忆霄" />
@@ -44,6 +46,7 @@
                 android:text="部门" />
 
             <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                android:id="@+id/dept"
                 style="@style/QDCommonDescription"
                 android:gravity="left"
                 android:text="浙江工业大学（注册）志愿者协会" />
@@ -54,6 +57,7 @@
                 android:text="权限" />
 
             <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                android:id="@+id/authority"
                 style="@style/QDCommonDescription"
                 android:gravity="left"
                 android:text="活动招募 活动管理 工时查询 维护管理 红黑名单管理 超级管理" />

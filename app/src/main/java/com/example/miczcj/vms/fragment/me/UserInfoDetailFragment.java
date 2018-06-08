@@ -1,10 +1,15 @@
 package com.example.miczcj.vms.fragment.me;
 
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.example.miczcj.vms.R;
 import com.example.miczcj.vms.base.BaseFragment;
+import com.example.miczcj.vms.model.User;
+import com.qmuiteam.qmui.alpha.QMUIAlphaTextView;
 import com.qmuiteam.qmui.arch.QMUIFragment;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
@@ -20,13 +25,31 @@ import butterknife.ButterKnife;
 public class UserInfoDetailFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
+    @BindView(R.id.uid)
+    QMUIAlphaTextView uid;
+    @BindView(R.id.name)
+    QMUIAlphaTextView name;
+    @BindView(R.id.dept)
+    QMUIAlphaTextView dept;
+    @BindView(R.id.authority)
+    QMUIAlphaTextView authority;
+
+    private User user = new User();
+    private Handler handler = new Handler();
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        user = (User)bundle.getSerializable("user");
+    }
 
     @Override
     public View onCreateView() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.user_info_detail, null);
         ButterKnife.bind(this, view);
         initTopBar();
-        //initContent();
+        initContent();
         return view;
     }
 
@@ -47,6 +70,43 @@ public class UserInfoDetailFragment extends BaseFragment {
                     }
                 });
 
+    }
+
+    private void initContent(){
+        new Thread(){
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        uid.setText(user.getUid());
+                        name.setText(user.getUsername());
+                        dept.setText(user.getDept());
+                        String authorityStr = "";
+                        String temp = user.getAuthority();
+                        if (temp.contains("1")) {
+                            authorityStr += "活动招募\n";
+                        }
+                        if (temp.contains("2")) {
+                            authorityStr += "活动管理\n";
+                        }
+                        if (temp.contains("3")) {
+                            authorityStr += "工时查询\n";
+                        }
+                        if (temp.contains("4")) {
+                            authorityStr += "维护管理\n";
+                        }
+                        if (temp.contains("5")) {
+                            authorityStr += "红黑名单管理\n";
+                        }
+                        if (temp.contains("9")) {
+                            authorityStr += "超级管理\n";
+                        }
+                        authority.setText(authorityStr);
+                    }
+                });
+            }
+        }.start();
     }
 
     private void showBottomSheetList() {
