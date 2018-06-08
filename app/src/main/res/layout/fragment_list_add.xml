@@ -36,7 +36,7 @@
                     android:textColor="@color/app_color_blue" />
 
                 <EditText
-                    android:id="@+id/editText2"
+                    android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="请输入姓名"
@@ -52,7 +52,7 @@
                     android:textColor="@color/app_color_blue" />
 
                 <EditText
-                    android:id="@+id/editText4"
+                    android:id="@+id/num"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -69,7 +69,7 @@
                     android:textColor="@color/app_color_blue" />
 
                 <EditText
-                    android:id="@+id/editText3"
+                    android:id="@+id/dcb"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -87,7 +87,7 @@
                     android:textColor="@color/app_color_blue" />
 
                 <EditText
-                    android:id="@+id/editText5"
+                    android:id="@+id/dept"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -96,7 +96,7 @@
                     android:textSize="14sp" />
 
                 <RadioGroup
-                    android:id="@+id/ryb_button"
+                    android:id="@+id/type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"

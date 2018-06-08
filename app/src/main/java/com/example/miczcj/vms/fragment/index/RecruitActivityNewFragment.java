@@ -277,9 +277,9 @@ public class RecruitActivityNewFragment extends BaseFragment {
         } else if (content.equals("")) {
             Toast.makeText(getContext(), "活动详情不能为空", Toast.LENGTH_SHORT).show();
             return false;
-//        }else if(content.length()<50){
-//            Toast.makeText(getContext(),"活动详情至少50字",Toast.LENGTH_SHORT).show();
-//            return false;
+        }else if(content.length()<50){
+            Toast.makeText(getContext(),"活动详情至少50字",Toast.LENGTH_SHORT).show();
+            return false;
         } else if (selecttime.equals("")) {
             Toast.makeText(getContext(), "可报名时间不能为空", Toast.LENGTH_SHORT).show();
             return false;
