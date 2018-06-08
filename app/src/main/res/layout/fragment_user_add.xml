@@ -36,7 +36,7 @@
                     android:textColor="@color/app_color_blue" />
 
                 <EditText
-                    android:id="@+id/editText2"
+                    android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="请输入姓名"
@@ -44,7 +44,6 @@
                     android:textSize="14sp" />
 
                 <com.qmuiteam.qmui.widget.QMUIFontFitTextView
-                    android:id="@+id/textView6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -53,7 +52,7 @@
                     android:textColor="@color/app_color_blue" />
 
                 <EditText
-                    android:id="@+id/editText5"
+                    android:id="@+id/dept"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -71,7 +70,7 @@
                     android:textColor="@color/app_color_blue" />
 
                 <CheckBox
-                    android:id="@+id/checkBox2"
+                    android:id="@+id/cb1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="活动招募"
@@ -79,7 +78,7 @@
                     android:textStyle="bold" />
 
                 <CheckBox
-                    android:id="@+id/checkBox3"
+                    android:id="@+id/cb2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="活动管理"
@@ -87,7 +86,7 @@
                     android:textStyle="bold"/>
 
                 <CheckBox
-                    android:id="@+id/checkBox7"
+                    android:id="@+id/cb3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="工时查询"
@@ -95,7 +94,7 @@
                     android:textStyle="bold" />
 
                 <CheckBox
-                    android:id="@+id/checkBox6"
+                    android:id="@+id/cb4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="维护管理"
@@ -103,7 +102,7 @@
                     android:textStyle="bold" />
 
                 <CheckBox
-                    android:id="@+id/checkBox5"
+                    android:id="@+id/cb5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="红黑名单管理"
@@ -111,7 +110,7 @@
                     android:textStyle="bold" />
 
                 <CheckBox
-                    android:id="@+id/checkBox4"
+                    android:id="@+id/cb9"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="超级管理"

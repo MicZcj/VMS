@@ -3,6 +3,7 @@ package com.example.miczcj.vms.fragment.me;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -49,18 +50,11 @@ public class UserInfoDetailFragment extends BaseFragment {
     @BindView(R.id.authority)
     QMUIAlphaTextView authority;
 
-    private User user = new User();
+    private User user;
     private ResMessage resMessage;
     private Handler handler = new Handler();
     private OkHttpClient okHttpClient = new OkHttpClient();
     private BaseHttp baseHttp = new BaseHttp();
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Bundle bundle = getArguments();
-        user = (User)bundle.getSerializable("user");
-    }
 
     @Override
     public View onCreateView() {
@@ -97,7 +91,9 @@ public class UserInfoDetailFragment extends BaseFragment {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        uid.setText(user.getUid());
+                        Bundle bundle = getArguments();
+                        user = (User)bundle.getSerializable("user");
+                        uid.setText(user.getUid()+"");
                         name.setText(user.getUsername());
                         dept.setText(user.getDept());
                         String authorityStr = "";
@@ -213,6 +209,15 @@ public class UserInfoDetailFragment extends BaseFragment {
                     .create();
             tipDialog.show();
         }
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                tipDialog.dismiss();
+            }
+        }, 1500);
+
+
     }
 
 }

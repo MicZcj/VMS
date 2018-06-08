@@ -3,6 +3,7 @@ package com.example.miczcj.vms.fragment.me;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,6 +30,7 @@ import com.qmuiteam.qmui.arch.QMUIFragment;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -99,7 +101,7 @@ public class UserManageFragment extends BaseFragment {
     private void initContent() {
         adapter = new SimpleAdapter(getContext(),getData(),R.layout.list_activity_item,
                 new String[]{"uidName","dept"},
-                new int[]{R.id.name,R.id.status});
+                new int[]{R.id.name,R.id.num});
         new Thread(){
             @Override
             public void run() {
@@ -167,7 +169,7 @@ public class UserManageFragment extends BaseFragment {
     public static UserInfoDetailFragment newInstance(User user) {
         //数据传入
         Bundle args = new Bundle();
-        args.putSerializable("user",user);
+        args.putSerializable("user",(Serializable) user);
         UserInfoDetailFragment fragment = new UserInfoDetailFragment();
         fragment.setArguments(args);
         return fragment;
