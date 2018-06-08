@@ -9,14 +9,29 @@ import android.view.View;
 import com.example.miczcj.vms.R;
 import com.example.miczcj.vms.base.BaseFragment;
 import com.example.miczcj.vms.model.User;
+import com.example.miczcj.vms.okhttp.BaseHttp;
+import com.example.miczcj.vms.okhttp.ResMessage;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.qmuiteam.qmui.alpha.QMUIAlphaTextView;
 import com.qmuiteam.qmui.arch.QMUIFragment;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by MicZcj on 2018/5/30.
@@ -35,7 +50,10 @@ public class UserInfoDetailFragment extends BaseFragment {
     QMUIAlphaTextView authority;
 
     private User user = new User();
+    private ResMessage resMessage;
     private Handler handler = new Handler();
+    private OkHttpClient okHttpClient = new OkHttpClient();
+    private BaseHttp baseHttp = new BaseHttp();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -120,14 +138,13 @@ public class UserInfoDetailFragment extends BaseFragment {
                         dialog.dismiss();
                         switch (position) {
                             case 0:
-                                //开启活动招募
+                                doPost("APIAdminUserDelete");
                                 break;
                             case 1:
-                                //停止活动招募
+                                doPost("APIAdminUserResetPassword");
                                 break;
                             case 2:
-                                //修改活动招募,跳转到RecruitNewActivity
-                                QMUIFragment fragment = new UserAddFragment();
+                                QMUIFragment fragment = newInstance(user);
                                 startFragment(fragment);
                                 break;
                         }
@@ -136,4 +153,66 @@ public class UserInfoDetailFragment extends BaseFragment {
                 .build()
                 .show();
     }
+
+    private static UserAddFragment newInstance(User u){
+        //数据传入
+        Bundle args = new Bundle();
+        args.putSerializable("user",u);
+        UserAddFragment fragment = new UserAddFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    private void doPost(String path){
+        FormBody formBody = new FormBody.Builder()
+                .add("uid",user.getUid()+"")
+                .build();
+        Request request = new Request.Builder()
+                .url(baseHttp.getUrl()+path)
+                .post(formBody)
+                .build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String result = response.body().string();
+                Gson gson = new Gson();
+                resMessage = new Gson().fromJson(result, ResMessage.class);
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                showResult();
+                            }
+                        });
+                    }
+                });
+                thread.start();
+            }
+        });
+    }
+
+    private void showResult(){
+        final QMUITipDialog tipDialog;
+        if(resMessage.getCode()==0) {
+            tipDialog = new QMUITipDialog.Builder(getContext())
+                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
+                    .setTipWord(resMessage.getMessage())
+                    .create();
+            tipDialog.show();
+        }else{
+            tipDialog = new QMUITipDialog.Builder(getContext())
+                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_FAIL)
+                    .setTipWord(resMessage.getMessage())
+                    .create();
+            tipDialog.show();
+        }
+    }
+
 }
