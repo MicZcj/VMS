@@ -98,8 +98,8 @@ public abstract class HomeController extends FrameLayout {
                 mRecyclerView.addItemDecoration(new GridDividerItemDecoration(getContext(), spanCount));
                 break;
             case 2:
-                mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), spanCount));
-                mRecyclerView.addItemDecoration(new GridDividerItemDecoration(getContext(), spanCount));
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL_LIST));
                 break;
             case 3:
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -149,7 +149,7 @@ public abstract class HomeController extends FrameLayout {
                 case 1:
                     return R.layout.home_item_layout;
                 case 2:
-                    return R.layout.home_item_layout;
+                    return R.layout.home_item_layout3;
                 case 3:
                     return R.layout.home_item_layout3;
             }

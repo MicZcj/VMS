@@ -31,7 +31,6 @@ public class HomeIndexController extends HomeController {
      */
     @Override
     protected ItemAdapter getItemAdapter() {
-        Log.i("第一页的getContext的值：", getContext().toString());
         return new ItemAdapter(getContext(), QDDataManager.getInstance().getComponentsDescriptions(),1);
     }
 }

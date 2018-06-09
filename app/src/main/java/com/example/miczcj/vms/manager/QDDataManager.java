@@ -17,6 +17,7 @@ import com.example.miczcj.vms.fragment.index.RecruitActivityNewFragment;
 import com.example.miczcj.vms.fragment.index.TimeQueryFragment;
 import com.example.miczcj.vms.fragment.me.UserInfoFragment;
 import com.example.miczcj.vms.fragment.me.UserManageFragment;
+import com.example.miczcj.vms.fragment.message.MessageFragment;
 import com.example.miczcj.vms.model.QDItemDescription;
 
 import java.util.ArrayList;
@@ -109,6 +110,7 @@ public class QDDataManager {
      */
     private void initUtilDesc() {
         mUtilNames = new ArrayList<>();
+        mUtilNames.add(MessageFragment.class);
 //        mUtilNames.add(QDColorHelperFragment.class);
 //        mUtilNames.add(QDDeviceHelperFragment.class);
 //        mUtilNames.add(QDDrawableHelperFragment.class);

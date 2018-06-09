@@ -15,6 +15,8 @@
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:background="@color/qmui_config_color_white"
-        android:divider="@null"
-        android:dividerHeight="0dp"/>
+        android:divider="@drawable/qmui_divider"
+        android:dividerHeight="0dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
 </FrameLayout>
