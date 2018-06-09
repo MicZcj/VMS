@@ -80,6 +80,7 @@ public class ActivityAllFragment extends BaseFragment {
             name = (String) bundle.get("name");
         }catch(NullPointerException e){
             name = "all";
+            doPost();
         }
         doPost();
 //        Bundle bundle = getArguments();
@@ -105,7 +106,11 @@ public class ActivityAllFragment extends BaseFragment {
             }
         });
 
-        mTopBar.setTitle(mQDItemDescription.getName());
+        if(name.equals("all")) {
+            mTopBar.setTitle(mQDItemDescription.getName());
+        }else{
+            mTopBar.setTitle("我的全部活动");
+        }
 
     }
 
@@ -210,4 +215,5 @@ public class ActivityAllFragment extends BaseFragment {
         fragment.setArguments(args);
         return fragment;
     }
+
 }

@@ -171,6 +171,8 @@ public class ListAddFragment extends BaseFragment {
                             @Override
                             public void run() {
                                 showResult();
+                                popBackStack();
+                                popBackStack();
                             }
                         });
                     }

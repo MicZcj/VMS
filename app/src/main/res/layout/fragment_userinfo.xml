@@ -37,6 +37,7 @@
                     android:text="张昌健"
                     android:textColor="@color/app_color_blue_2" />
 
+
                 <TextView
                     style="@style/QDCommonTitle"
                     android:ellipsize="end"
@@ -47,6 +48,12 @@
                     style="@style/QDCommonDescription"
                     android:gravity="left"
                     android:text="1008" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
 
                 <TextView
                     style="@style/QDCommonTitle"
@@ -59,6 +66,12 @@
                     android:gravity="left"
                     android:text="浙江工业大学青年志愿者协会" />
 
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
+
                 <TextView
                     style="@style/QDCommonTitle"
                     android:ellipsize="end"
@@ -70,6 +83,12 @@
                     android:gravity="left"
                     android:maxLines="7"
                     android:text="活动招募 活动管理 工时查询 维护管理 红黑名单管理 超级管理" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
 
                 <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                     android:id="@+id/btn"

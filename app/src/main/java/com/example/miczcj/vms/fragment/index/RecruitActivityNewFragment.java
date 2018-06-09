@@ -40,7 +40,7 @@ import okhttp3.Response;
 import static android.content.Context.MODE_PRIVATE;
 
 //原本是 QMUIButton
-@Widget(name = "活动招募", iconRes = R.mipmap.recruit_add)
+@Widget(name = "新建招募", iconRes = R.mipmap.recruit_add)
 public class RecruitActivityNewFragment extends BaseFragment {
 
     @BindView(R.id.topbar)
@@ -97,7 +97,7 @@ public class RecruitActivityNewFragment extends BaseFragment {
         Log.i("opertaion的值是",operation);
 
         initTopBar();
-//        initContent();
+        initContent();
         return view;
     }
 
@@ -127,8 +127,7 @@ public class RecruitActivityNewFragment extends BaseFragment {
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                    recruitPost();
+                recruitPost();
             }
         });
     }
@@ -179,7 +178,6 @@ public class RecruitActivityNewFragment extends BaseFragment {
             okHttpClient.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.i("新建志愿者活动招募失败", "未知原因！");
                     e.printStackTrace();
                 }
 
@@ -187,7 +185,6 @@ public class RecruitActivityNewFragment extends BaseFragment {
                 public void onResponse(Call call, Response response) throws IOException {
                     //TODO
                     String result = response.body().string();
-                    Log.i("返回结果", result);
                     resMessage = new Gson().fromJson(result, ResMessage.class);
                     Thread thread = new Thread(new Runnable() {
                         @Override
@@ -195,7 +192,7 @@ public class RecruitActivityNewFragment extends BaseFragment {
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getContext(), "添加成功", Toast.LENGTH_SHORT).show();
+                                    showResult();
                                 }
                             });
                         }
@@ -238,12 +235,10 @@ public class RecruitActivityNewFragment extends BaseFragment {
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getContext(),"修改招募信息成功！",Toast.LENGTH_SHORT).show();
+                                    showResult();
                                     popBackStack();
                                     popBackStack();
                                     popBackStack();
-                                    BaseFragment fragment = new ActivityAllFragment();
-                                    startFragment(fragment);
                                 }
                             });
                         }
@@ -288,5 +283,28 @@ public class RecruitActivityNewFragment extends BaseFragment {
             return false;
         }
         return true;
+    }
+
+    private void showResult(){
+        final QMUITipDialog tipDialog;
+        if(resMessage.getCode()==0) {
+            tipDialog = new QMUITipDialog.Builder(getContext())
+                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
+                    .setTipWord(operation.equals("new")?"新建成功":"修改成功")
+                    .create();
+            tipDialog.show();
+        }else{
+            tipDialog = new QMUITipDialog.Builder(getContext())
+                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_FAIL)
+                    .setTipWord(operation.equals("new")?"新建失败":"修改失败")
+                    .create();
+            tipDialog.show();
+        }
+        mSubmit.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                tipDialog.dismiss();
+            }
+        }, 1500);
     }
 }

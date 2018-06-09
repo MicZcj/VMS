@@ -10,5 +10,6 @@
         android:layout_height="match_parent"
         android:background="@color/qmui_config_color_white"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"></ListView>
+        android:paddingRight="10dp"
+        android:divider="@drawable/qmui_divider"></ListView>
 </FrameLayout>

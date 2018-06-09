@@ -64,8 +64,8 @@ public class ActivityInfoFragment extends BaseFragment {
     QMUIAlphaTextView actendtimeTxt;
     @BindView(R.id.content)
     QMUIAlphaTextView contentTxt;
-    @BindView(R.id.worksheet)
-    QMUIAlphaTextView worksheetTxt;
+//    @BindView(R.id.worksheet)
+//    QMUIAlphaTextView worksheetTxt;
 
 
     private int mCurrentDialogStyle = R.style.DialogTheme2;
@@ -131,7 +131,7 @@ public class ActivityInfoFragment extends BaseFragment {
                         actstarttimeTxt.setText(va.getActstarttime());
                         actendtimeTxt.setText(va.getActendtime());
                         contentTxt.setText(va.getActendtime());
-                        worksheetTxt.setText(workSheet);
+//                        worksheetTxt.setText(workSheet);
                         mTopBar.setTitle(va.getTitle());
                     }
                 });

@@ -2,6 +2,9 @@ package com.example.miczcj.vms.manager;
 
 
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+
 import com.example.miczcj.vms.base.BaseFragment;
 import com.example.miczcj.vms.fragment.index.ActivityAllFragment;
 import com.example.miczcj.vms.fragment.index.ActivityDoingFragment;
@@ -23,6 +26,8 @@ import com.example.miczcj.vms.model.QDItemDescription;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * @author cginechen
  * @date 2016-10-21
@@ -32,6 +37,15 @@ import java.util.List;
 public class QDDataManager {
     private static QDDataManager _sInstance;
     private QDWidgetContainer mWidgetContainer;
+//    private String authority;
+//
+//    public String getAuthority() {
+//        return authority;
+//    }
+//
+//    public void setAuthority(String authority) {
+//        this.authority = authority;
+//    }
 
     private List<Class<? extends BaseFragment>> mComponentsNames;
     private List<Class<? extends BaseFragment>> mUtilNames;

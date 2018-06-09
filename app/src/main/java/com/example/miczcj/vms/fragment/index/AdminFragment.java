@@ -2,6 +2,7 @@ package com.example.miczcj.vms.fragment.index;
 
 import android.os.Handler;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -186,9 +187,12 @@ public class AdminFragment extends BaseFragment {
     }
 
     private void doPost(String path, String type){
+        Log.i("name",text.toString());
+        Log.i("name1",text.toString());
+        Log.i("type",type);
         FormBody formBody = new FormBody.Builder()
-                .add("num",text.toString())
-                .add("num1",text.toString())
+                .add("name",text.toString())
+                .add("name1",text.toString())
                 .add("type",type)
                 .build();
         Request request = new Request.Builder()

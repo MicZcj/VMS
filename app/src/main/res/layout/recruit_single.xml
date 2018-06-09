@@ -28,6 +28,12 @@
                 android:gravity="left"
                 android:text="浙江图书馆志愿者活动" />
 
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="14dp"
+                android:background="@color/qmui_config_color_gray_7" />
+
             <TextView
                 style="@style/QDCommonTitle"
                 android:ellipsize="end"
@@ -38,6 +44,12 @@
                 style="@style/QDCommonDescription"
                 android:gravity="left"
                 android:text="浙江工业大学（注册）志愿者协会" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="14dp"
+                android:background="@color/qmui_config_color_gray_7" />
 
             <TextView
                 style="@style/QDCommonTitle"
@@ -50,6 +62,12 @@
                 android:gravity="left"
                 android:text="西湖区曙光路73号浙江图书馆" />
 
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="14dp"
+                android:background="@color/qmui_config_color_gray_7" />
+
             <TextView
                 style="@style/QDCommonTitle"
                 android:ellipsize="end"
@@ -61,6 +79,12 @@
                 android:gravity="left"
                 android:text="2018.05.29-2018.06.01（下周二至周五）下午13:00-16:00 " />
 
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="14dp"
+                android:background="@color/qmui_config_color_gray_7" />
+
             <TextView
                 style="@style/QDCommonTitle"
                 android:ellipsize="end"
@@ -71,6 +95,12 @@
                 style="@style/QDCommonDescription"
                 android:gravity="left"
                 android:text="40" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="14dp"
+                android:background="@color/qmui_config_color_gray_7" />
 
             <TextView
                 style="@style/QDCommonTitle"
@@ -94,6 +124,12 @@
 9.报名方式：关注校志协微信公众号右下角“活动报名”或直接点击阅读原文报名，填写详细的报名表 \n
 10.截止时间：名额有限，报满即止 " />
 
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="14dp"
+                android:background="@color/qmui_config_color_gray_7" />
+
             <TextView
                 style="@style/QDCommonTitle"
                 android:ellipsize="end"
@@ -104,6 +140,8 @@
                 style="@style/QDCommonDescription"
                 android:gravity="left"
                 android:text="冯同学（17306424698）" />
+
+
 
         </LinearLayout>
     </ScrollView>

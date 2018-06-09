@@ -29,6 +29,12 @@
                 android:gravity="left"
                 android:text="1001" />
 
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="14dp"
+                android:background="@color/qmui_config_color_gray_7" />
+
             <TextView
                 style="@style/QDCommonTitle"
                 android:ellipsize="end"
@@ -40,6 +46,12 @@
                 android:gravity="left"
                 android:text="张忆霄" />
 
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="14dp"
+                android:background="@color/qmui_config_color_gray_7" />
+
             <TextView
                 style="@style/QDCommonTitle"
                 android:ellipsize="end"
@@ -50,6 +62,12 @@
                 style="@style/QDCommonDescription"
                 android:gravity="left"
                 android:text="浙江工业大学（注册）志愿者协会" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="14dp"
+                android:background="@color/qmui_config_color_gray_7" />
 
             <TextView
                 style="@style/QDCommonTitle"

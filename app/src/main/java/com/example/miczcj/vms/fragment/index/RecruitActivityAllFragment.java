@@ -111,8 +111,6 @@ public class RecruitActivityAllFragment extends BaseFragment {
             @Override
             public Object instantiateItem(final ViewGroup container, int position) {
                 ContentPage page = ContentPage.getPage(position);
-                Log.i("position",""+position);
-                Log.i("运行到这里","4");
                 View view = getPageView(page);
                 ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 container.addView(view, params);
@@ -160,7 +158,6 @@ public class RecruitActivityAllFragment extends BaseFragment {
             @Override
             public void run() {
                 try{
-                    Log.i("运行到这里","2");
                     BaseHttp baseHttp = new BaseHttp();
                     SharedPreferences preference = getContext().getSharedPreferences("login_info", MODE_PRIVATE);
                     String dept = preference.getString("dept", "");

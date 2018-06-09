@@ -46,6 +46,12 @@
                     android:gravity="left"
                     android:text="101920" />
 
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
+
                 <TextView
                     style="@style/QDCommonTitle"
                     android:ellipsize="end"
@@ -56,6 +62,12 @@
                     style="@style/QDCommonDescription"
                     android:gravity="left"
                     android:text="152720718681512c1eaa7993940e1bf1a65674a3c4b5e" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
 
                 <TextView
                     style="@style/QDCommonTitle"
@@ -68,6 +80,12 @@
                     android:gravity="left"
                     android:text="西溪湿地志愿者活动" />
 
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
+
                 <TextView
                     style="@style/QDCommonTitle"
                     android:ellipsize="end"
@@ -78,6 +96,12 @@
                     style="@style/QDCommonDescription"
                     android:gravity="left"
                     android:text="浙江工业大学（注册）志愿者协会经贸分会" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
 
                 <TextView
                     style="@style/QDCommonTitle"
@@ -90,6 +114,12 @@
                     android:gravity="left"
                     android:text="2018-05-26" />
 
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
+
                 <TextView
                     style="@style/QDCommonTitle"
                     android:ellipsize="end"
@@ -100,6 +130,12 @@
                     style="@style/QDCommonDescription"
                     android:gravity="left"
                     android:text="2018-05-27" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
 
 
                 <TextView
@@ -113,16 +149,22 @@
                     android:gravity="left"
                     android:text="无权限" />
 
-                <TextView
-                    style="@style/QDCommonTitle"
-                    android:ellipsize="end"
-                    android:text="工时表" />
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
 
-                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
-                    android:id="@+id/worksheet"
-                    style="@style/QDCommonDescription"
-                    android:gravity="left"
-                    android:text="无权限" />
+                <!--<TextView-->
+                    <!--style="@style/QDCommonTitle"-->
+                    <!--android:ellipsize="end"-->
+                    <!--android:text="工时表" />-->
+
+                <!--<com.qmuiteam.qmui.alpha.QMUIAlphaTextView-->
+                    <!--android:id="@+id/worksheet"-->
+                    <!--style="@style/QDCommonDescription"-->
+                    <!--android:gravity="left"-->
+                    <!--android:text="无权限" />-->
 
             </LinearLayout>
         </ScrollView>

@@ -135,6 +135,8 @@ public class UserInfoDetailFragment extends BaseFragment {
                         switch (position) {
                             case 0:
                                 doPost("APIAdminUserDelete");
+                                popBackStack();
+                                popBackStack();
                                 break;
                             case 1:
                                 doPost("APIAdminUserResetPassword");

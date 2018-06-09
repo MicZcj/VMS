@@ -43,6 +43,14 @@ public class RecruitInfoFragment extends BaseFragment {
     QMUIAlphaTextView note;
     @BindView(R.id.date)
     QMUIAlphaTextView date;
+    @BindView(R.id.idcard)
+    QMUIAlphaTextView idcard;
+    @BindView(R.id.experience)
+    QMUIAlphaTextView experience;
+    @BindView(R.id.language)
+    QMUIAlphaTextView language;
+    @BindView(R.id.clothes)
+    QMUIAlphaTextView clothes;
 
     private RecruitStudent recruitStudent;
     private Handler handler = new Handler();
@@ -77,6 +85,10 @@ public class RecruitInfoFragment extends BaseFragment {
                         time.setText(recruitStudent.getTime());
                         note.setText(recruitStudent.getNote());
                         date.setText(recruitStudent.getDate());
+                        clothes.setText(recruitStudent.getClothes());
+                        experience.setText(recruitStudent.getExperience());
+                        idcard.setText(recruitStudent.getIdcard());
+                        language.setText(recruitStudent.getLanguage());
                     }
                 });
             }

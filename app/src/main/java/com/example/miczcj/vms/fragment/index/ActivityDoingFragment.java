@@ -46,7 +46,7 @@ import okhttp3.Response;
 import static android.content.Context.MODE_PRIVATE;
 
 //原本是 QMUIButton
-@Widget(name = "活动进行中", iconRes = R.mipmap.activity_doing)
+@Widget(name = "进行中的活动", iconRes = R.mipmap.activity_doing)
 public class ActivityDoingFragment extends BaseFragment {
 
     @BindView(R.id.topbar)

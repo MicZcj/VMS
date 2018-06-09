@@ -39,6 +39,12 @@
                     android:gravity="left"
                     android:text="叶茜雅" />
 
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
+
                 <TextView
                     style="@style/QDCommonTitle"
                     android:ellipsize="end"
@@ -49,6 +55,12 @@
                     style="@style/QDCommonDescription"
                     android:gravity="left"
                     android:text="女" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
 
                 <TextView
                     style="@style/QDCommonTitle"
@@ -61,6 +73,12 @@
                     android:gravity="left"
                     android:text="政管学院行管1702班" />
 
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
+
                 <TextView
                     style="@style/QDCommonTitle"
                     android:ellipsize="end"
@@ -71,6 +89,12 @@
                     style="@style/QDCommonDescription"
                     android:gravity="left"
                     android:text="201706051812" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
 
                 <TextView
                     style="@style/QDCommonTitle"
@@ -83,6 +107,12 @@
                     android:gravity="left"
                     android:text="319412661" />
 
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
+
                 <TextView
                     style="@style/QDCommonTitle"
                     android:ellipsize="end"
@@ -94,6 +124,11 @@
                     android:gravity="left"
                     android:text="17816110377" />
 
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
 
                 <TextView
                     style="@style/QDCommonTitle"
@@ -106,6 +141,12 @@
                     android:gravity="left"
                     android:text="17816110377" />
 
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
+
                 <TextView
                     style="@style/QDCommonTitle"
                     android:ellipsize="end"
@@ -116,6 +157,12 @@
                     style="@style/QDCommonDescription"
                     android:gravity="left"
                     android:text="2018-05-24 17:36:54.0" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
 
                 <TextView
                     style="@style/QDCommonTitle"
@@ -128,6 +175,12 @@
                     android:gravity="left"
                     android:text="5月30日（周三）;" />
 
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
+
                 <TextView
                     style="@style/QDCommonTitle"
                     android:ellipsize="end"
@@ -138,6 +191,80 @@
                     style="@style/QDCommonDescription"
                     android:gravity="left"
                     android:text="5月30日（周三）;" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="身份证" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/idcard"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="外语水平" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/language"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="衣服尺码" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/clothes"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
+
+                <TextView
+                    style="@style/QDCommonTitle"
+                    android:ellipsize="end"
+                    android:text="志愿服务经历" />
+
+                <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
+                    android:id="@+id/experience"
+                    style="@style/QDCommonDescription"
+                    android:gravity="left"
+                    android:text="" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/qmui_config_color_gray_7" />
 
             </LinearLayout>
         </ScrollView>

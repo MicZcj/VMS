@@ -45,7 +45,7 @@ import okhttp3.Response;
 import static android.content.Context.MODE_PRIVATE;
 
 //原本是 QMUIButton
-@Widget(name = "活动已完成", iconRes = R.mipmap.activity_finish)
+@Widget(name = "已完成的活动", iconRes = R.mipmap.activity_finish)
 public class ActivityFinishFragment extends BaseFragment {
 
     @BindView(R.id.topbar)

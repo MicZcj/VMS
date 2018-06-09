@@ -71,7 +71,7 @@ public class UserAddFragment extends BaseFragment {
 
     private String operation;
     private User user;
-    private String path = "APIListNew";
+    private String path = "APIAdminUserNew";
 
 
     private ResMessage resMessage;
@@ -194,6 +194,8 @@ public class UserAddFragment extends BaseFragment {
                             @Override
                             public void run() {
                                 showResult();
+                                popBackStack();
+                                popBackStack();
                             }
                         });
                     }
