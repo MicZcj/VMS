@@ -3,8 +3,12 @@ package com.example.miczcj.vms.manager;
 
 
 import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
+import com.example.miczcj.vms.QDApplication;
 import com.example.miczcj.vms.base.BaseFragment;
 import com.example.miczcj.vms.fragment.index.ActivityAllFragment;
 import com.example.miczcj.vms.fragment.index.ActivityDoingFragment;
@@ -37,21 +41,18 @@ import static android.content.Context.MODE_PRIVATE;
 public class QDDataManager {
     private static QDDataManager _sInstance;
     private QDWidgetContainer mWidgetContainer;
-//    private String authority;
-//
-//    public String getAuthority() {
-//        return authority;
-//    }
-//
-//    public void setAuthority(String authority) {
-//        this.authority = authority;
-//    }
+    private SharedPreferences preferences;
+    private String authority;
+
 
     private List<Class<? extends BaseFragment>> mComponentsNames;
     private List<Class<? extends BaseFragment>> mUtilNames;
     private List<Class<? extends BaseFragment>> mLabNames;
 
     public QDDataManager() {
+        preferences = QDApplication.getContext().getSharedPreferences("login_info", Context.MODE_PRIVATE);
+        authority = preferences.getString("authority","123459");
+        Log.i("authority",authority);
         mWidgetContainer = QDWidgetContainer.getInstance();
         initComponentsDesc();
         initUtilDesc();
@@ -73,50 +74,28 @@ public class QDDataManager {
      */
     private void initComponentsDesc() {
         mComponentsNames = new ArrayList<>();
-        mComponentsNames.add(RecruitActivityNewFragment.class);
-        mComponentsNames.add(RecruitActivityAllFragment.class);
-
-        mComponentsNames.add(ActivityQueryFragment.class);
-        mComponentsNames.add(ActivityDoingFragment.class);
-        mComponentsNames.add(ActivityFinishFragment.class);
-        mComponentsNames.add(ActivityAllFragment.class);
-
-        mComponentsNames.add(TimeQueryFragment.class);
-
-        mComponentsNames.add(AdminFragment.class);
-        mComponentsNames.add(AdminAllFragment.class);
-//        mComponentsNames.add(AdminUploadFragment.class);
-//        mComponentsNames.add(AdminDeleteFileFragment.class);
-//        mComponentsNames.add(AdminFlushActivityFragment.class);
-//        mComponentsNames.add(AdminShowHideFragment.class);
-//        mComponentsNames.add(AdminSummaryFragment.class);
-//        mComponentsNames.add(AdminUpdateDataFragment.class);
-
-        mComponentsNames.add(ListRedFragment.class);
-        mComponentsNames.add(ListBlackFragment.class);
-        mComponentsNames.add(ListYellowFragment.class);
-
-
-//        mComponentsNames.add(QDButtonFragment.class);
-//        mComponentsNames.add(QDDialogFragment.class);
-//        mComponentsNames.add(QDFloatLayoutFragment.class);
-//        mComponentsNames.add(QDEmptyViewFragment.class);
-//        mComponentsNames.add(QDTabSegmentFragment.class);
-//        mComponentsNames.add(QDProgressBarFragment.class);
-//        mComponentsNames.add(QDBottomSheetFragment.class);
-//        mComponentsNames.add(QDGroupListViewFragment.class);
-//        mComponentsNames.add(QDTipDialogFragment.class);
-//        mComponentsNames.add(QDRadiusImageViewFragment.class);
-//        mComponentsNames.add(QDVerticalTextViewFragment.class);
-//        mComponentsNames.add(QDPullRefreshFragment.class);
-//        mComponentsNames.add(QDPopupFragment.class);
-//        mComponentsNames.add(QDSpanTouchFixTextViewFragment.class);
-//        mComponentsNames.add(QDLinkTextViewFragment.class);
-//        mComponentsNames.add(QDQQFaceFragment.class);
-//        mComponentsNames.add(QDSpanFragment.class);
-//        mComponentsNames.add(QDCollapsingTopBarLayoutFragment.class);
-//        mComponentsNames.add(QDViewPagerFragment.class);
-//        mComponentsNames.add(QDLayoutFragment.class);
+        if(authority.contains("1")) {
+            mComponentsNames.add(RecruitActivityNewFragment.class);
+            mComponentsNames.add(RecruitActivityAllFragment.class);
+        }
+        if(authority.contains("2")) {
+            mComponentsNames.add(ActivityQueryFragment.class);
+            mComponentsNames.add(ActivityDoingFragment.class);
+            mComponentsNames.add(ActivityFinishFragment.class);
+            mComponentsNames.add(ActivityAllFragment.class);
+        }
+        if(authority.contains("3")) {
+            mComponentsNames.add(TimeQueryFragment.class);
+        }
+        if(authority.contains("4")) {
+            mComponentsNames.add(AdminFragment.class);
+            mComponentsNames.add(AdminAllFragment.class);
+        }
+        if(authority.contains("5")) {
+            mComponentsNames.add(ListRedFragment.class);
+            mComponentsNames.add(ListBlackFragment.class);
+            mComponentsNames.add(ListYellowFragment.class);
+        }
     }
 
     /**
@@ -125,11 +104,6 @@ public class QDDataManager {
     private void initUtilDesc() {
         mUtilNames = new ArrayList<>();
         mUtilNames.add(MessageFragment.class);
-//        mUtilNames.add(QDColorHelperFragment.class);
-//        mUtilNames.add(QDDeviceHelperFragment.class);
-//        mUtilNames.add(QDDrawableHelperFragment.class);
-//        mUtilNames.add(QDStatusBarHelperFragment.class);
-//        mUtilNames.add(QDViewHelperFragment.class);
     }
 
     /**
@@ -138,11 +112,9 @@ public class QDDataManager {
     private void initLabDesc() {
         mLabNames = new ArrayList<>();
         mLabNames.add(UserInfoFragment.class);
-        mLabNames.add(UserManageFragment.class);
-//        mLabNames.add(QDAnimationListViewFragment.class);
-//        mLabNames.add(QDSnapHelperFragment.class);
-//        mLabNames.add(QDArchTestFragment.class);
-//        mLabNames.add(QDSwipeDeleteListViewFragment.class);
+        if(authority.contains("9")) {
+            mLabNames.add(UserManageFragment.class);
+        }
     }
 
     public QDItemDescription getDescription(Class<? extends BaseFragment> cls) {
