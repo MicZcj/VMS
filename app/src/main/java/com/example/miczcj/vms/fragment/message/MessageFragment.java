@@ -26,6 +26,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.qmuiteam.qmui.arch.QMUIFragment;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,7 +45,7 @@ import okhttp3.Response;
 /**
  * Created by MicZcj on 2018/6/9.
  */
-@Widget(name = "系统消息", iconRes = R.mipmap.vms_logo)
+@Widget(name = "系统消息", iconRes = R.mipmap.message)
 public class MessageFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
@@ -52,6 +54,8 @@ public class MessageFragment extends BaseFragment {
 
     private SimpleAdapter adapter;
     private ArrayList<Message> list = new ArrayList<Message>();
+
+    private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
 
     private Handler handler = new Handler();
     private BaseHttp baseHttp = new BaseHttp();
@@ -95,6 +99,12 @@ public class MessageFragment extends BaseFragment {
                     @Override
                     public void run() {
                         listview.setAdapter(adapter);
+                        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                showLongMessageDialog(list.get(position));
+                            }
+                        });
                         adapter.notifyDataSetChanged();
 
                     }
@@ -152,4 +162,18 @@ public class MessageFragment extends BaseFragment {
             }
         });
     }
+
+    private void showLongMessageDialog(Message message) {
+        new QMUIDialog.MessageDialogBuilder(getActivity())
+                .setTitle(message.getTitle())
+                .setMessage(message.getContent())
+                .addAction("确定", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                    }
+                })
+                .create(mCurrentDialogStyle).show();
+    }
+
 }

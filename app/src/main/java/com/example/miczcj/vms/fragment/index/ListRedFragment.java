@@ -61,6 +61,7 @@ public class ListRedFragment extends BaseFragment {
     private SimpleAdapter adapter;
     private ArrayList<List> list = new ArrayList<List>();
 
+
     private int mCurrentDialogStyle = R.style.DialogTheme2;
     private Handler handler = new Handler();
     private Bundle bundle;

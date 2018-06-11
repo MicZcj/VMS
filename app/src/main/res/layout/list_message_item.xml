@@ -58,7 +58,8 @@
         android:layout_marginLeft="10dp"
         android:layout_weight="1"
         android:adjustViewBounds="false"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/qmui_icon_chevron" />
+        android:background="@android:drawable/ic_notification_overlay"
+        android:scaleType="fitCenter" />
+        <!--app:srcCompat="@drawable/qmui_icon_chevron" />-->
 
 </RelativeLayout>
