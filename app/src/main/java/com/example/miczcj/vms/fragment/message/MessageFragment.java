@@ -25,6 +25,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.qmuiteam.qmui.arch.QMUIFragment;
+import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
@@ -42,6 +43,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 /**
  * Created by MicZcj on 2018/6/9.
  */
@@ -51,6 +55,8 @@ public class MessageFragment extends BaseFragment {
     QMUITopBar mTopBar;
     @BindView(R.id.listview)
     ListView listview;
+    @BindView(R.id.empty_view_loading)
+    QMUILoadingView mLoadingView;
 
     private SimpleAdapter adapter;
     private ArrayList<Message> list = new ArrayList<Message>();
@@ -73,6 +79,7 @@ public class MessageFragment extends BaseFragment {
     protected View onCreateView() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_listview, null);
         ButterKnife.bind(this, view);
+        mLoadingView.setVisibility(VISIBLE);
         mQDItemDescription = QDDataManager.getInstance().getDescription(this.getClass());
         initTopBar();
         initContent();
@@ -152,11 +159,10 @@ public class MessageFragment extends BaseFragment {
                 }
                 Log.i("list的大小",list.size()+"");
                 initContent();
-                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                handler.post(new Runnable() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Message message = list.get(position);
-//                        Toast.makeText()
+                    public void run() {
+                        mLoadingView.setVisibility(GONE);
                     }
                 });
             }

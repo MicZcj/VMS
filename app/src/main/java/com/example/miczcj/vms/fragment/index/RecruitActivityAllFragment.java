@@ -30,6 +30,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.qmuiteam.qmui.arch.QMUIFragment;
+import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
@@ -49,6 +50,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.view.View.GONE;
 
 /**
  * {@link QMUIGroupListView} 的使用示例。
@@ -64,6 +66,8 @@ public class RecruitActivityAllFragment extends BaseFragment {
     QMUITabSegment mTabSegment;
     @BindView(R.id.contentViewPager)
     ViewPager mContentViewPager;
+    @BindView(R.id.empty_view_loading)
+    QMUILoadingView mLoadingView;
 
 
 
@@ -195,6 +199,12 @@ public class RecruitActivityAllFragment extends BaseFragment {
                     }
                     initListView(list1,1);
                     initListView(list2,2);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mLoadingView.setVisibility(GONE);
+                        }
+                    });
                     if(!list1.isEmpty()) {
                         listview1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override

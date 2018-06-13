@@ -27,6 +27,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
 import com.qmuiteam.qmui.arch.QMUIFragment;
+import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 
 import java.io.IOException;
@@ -43,6 +44,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 /**
  * Created by MicZcj on 2018/5/30.
  */
@@ -52,6 +56,8 @@ public class UserManageFragment extends BaseFragment {
     QMUITopBar mTopBar;
     @BindView(R.id.listview)
     ListView listview;
+    @BindView(R.id.empty_view_loading)
+    QMUILoadingView mLoadingView;
 
     private SimpleAdapter adapter;
     private ArrayList<User> list = new ArrayList<User>();
@@ -72,6 +78,7 @@ public class UserManageFragment extends BaseFragment {
     protected View onCreateView() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_activity, null);
         ButterKnife.bind(this, view);
+        mLoadingView.setVisibility(VISIBLE);
         mQDItemDescription = QDDataManager.getInstance().getDescription(this.getClass());
         initTopBar();
         initContent();
@@ -154,6 +161,12 @@ public class UserManageFragment extends BaseFragment {
                     list.add(u);
                 }
                 initContent();
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mLoadingView.setVisibility(GONE);
+                    }
+                });
                 listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

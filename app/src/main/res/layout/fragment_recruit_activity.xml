@@ -16,12 +16,26 @@
         android:layout_height="40dp"
         android:background="@drawable/tab_panel_bg"/>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/contentViewPager"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/qmui_config_color_white">
-    </android.support.v4.view.ViewPager>
+        android:layout_height="match_parent">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/contentViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/qmui_config_color_white">
+        </android.support.v4.view.ViewPager>
+        <com.qmuiteam.qmui.widget.QMUILoadingView
+            android:id="@+id/empty_view_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:keyboardNavigationCluster="true"
+            android:visibility="visible" />
+    </FrameLayout>
+
+
 
 </LinearLayout>

@@ -121,6 +121,7 @@
                 <com.qmuiteam.qmui.alpha.QMUIAlphaTextView
                     android:id="@+id/phone"
                     style="@style/QDCommonDescription"
+                    android:autoLink="phone"
                     android:gravity="left"
                     android:text="17816110377" />
 
@@ -139,6 +140,7 @@
                     android:id="@+id/phoneshort"
                     style="@style/QDCommonDescription"
                     android:gravity="left"
+                    android:autoLink="phone"
                     android:text="17816110377" />
 
                 <View

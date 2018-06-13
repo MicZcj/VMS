@@ -26,6 +26,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.qmuiteam.qmui.arch.QMUIFragment;
+import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
@@ -36,6 +37,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.Call;
@@ -46,6 +48,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 //原本是 QMUIButton
 @Widget(name = "全部活动", iconRes = R.mipmap.activity_all)
@@ -55,6 +59,8 @@ public class ActivityAllFragment extends BaseFragment {
     QMUITopBar mTopBar;
     @BindView(R.id.listview)
     ListView listview;
+    @BindView(R.id.empty_view_loading)
+    QMUILoadingView mLoadingView;
 
     private SimpleAdapter adapter;
     private ArrayList<VolunteerActivity> list = new ArrayList<VolunteerActivity>();
@@ -75,11 +81,13 @@ public class ActivityAllFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         bundle = getArguments();
         try{
             name = (String) bundle.get("name");
         }catch(NullPointerException e){
             name = "all";
+
             doPost();
         }
         doPost();
@@ -92,6 +100,7 @@ public class ActivityAllFragment extends BaseFragment {
     protected View onCreateView() {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_activity, null);
         ButterKnife.bind(this, view);
+        mLoadingView.setVisibility(VISIBLE);
         mQDItemDescription = QDDataManager.getInstance().getDescription(this.getClass());
         initTopBar();
         initContent();
@@ -192,6 +201,12 @@ public class ActivityAllFragment extends BaseFragment {
                     list.add(va);
                 }
                 initContent();
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mLoadingView.setVisibility(GONE);
+                    }
+                });
                 listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

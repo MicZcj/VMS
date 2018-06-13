@@ -25,6 +25,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.qmuiteam.qmui.arch.QMUIFragment;
+import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
@@ -44,6 +45,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 //原本是 QMUIButton
 @Widget(name = "进行中的活动", iconRes = R.mipmap.activity_doing)
@@ -53,6 +56,8 @@ public class ActivityDoingFragment extends BaseFragment {
     QMUITopBar mTopBar;
     @BindView(R.id.listview)
     ListView listview;
+    @BindView(R.id.empty_view_loading)
+    QMUILoadingView mLoadingView;
 
     private SimpleAdapter adapter;
     private ArrayList<VolunteerActivity> list = new ArrayList<VolunteerActivity>();
@@ -74,6 +79,7 @@ public class ActivityDoingFragment extends BaseFragment {
     protected View onCreateView() {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_activity, null);
         ButterKnife.bind(this, view);
+        mLoadingView.setVisibility(VISIBLE);
         mQDItemDescription = QDDataManager.getInstance().getDescription(this.getClass());
 
         initTopBar();
@@ -151,6 +157,12 @@ public class ActivityDoingFragment extends BaseFragment {
                     list.add(va);
                 }
                 initContent();
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mLoadingView.setVisibility(GONE);
+                    }
+                });
                 listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
