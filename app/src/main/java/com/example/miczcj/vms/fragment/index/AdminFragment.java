@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 
 import java.io.IOException;
@@ -210,22 +211,44 @@ public class AdminFragment extends BaseFragment {
                 String result = response.body().string();
                 Gson gson = new Gson();
                 resMessage = gson.fromJson(result,ResMessage.class);
-                showResult();
+                new Thread(){
+                    @Override
+                    public void run() {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                showResult();
+                            }
+                        });
+                    }
+                }.start();
+
             }
         });
     }
 
     private void showResult(){
-        new Thread(){
+        final QMUITipDialog tipDialog;
+        if(resMessage.getCode()==0) {
+            tipDialog = new QMUITipDialog.Builder(getContext())
+                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
+                    .setTipWord(resMessage.getMessage())
+                    .create();
+            tipDialog.show();
+        }else{
+            tipDialog = new QMUITipDialog.Builder(getContext())
+                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_FAIL)
+                    .setTipWord(resMessage.getMessage())
+                    .create();
+            tipDialog.show();
+        }
+
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getContext(),resMessage.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
+                tipDialog.dismiss();
             }
-        }.start();
+        }, 1500);
+
     }
 }
