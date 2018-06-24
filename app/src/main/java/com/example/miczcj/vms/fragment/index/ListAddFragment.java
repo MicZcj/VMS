@@ -2,6 +2,7 @@ package com.example.miczcj.vms.fragment.index;
 
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -150,6 +151,7 @@ public class ListAddFragment extends BaseFragment {
                 .add("type",type)
                 .add("dcb",dcb)
                 .build();
+        Log.i("传过去的值",name+num+dept+type+dcb);
         Request reuqest = new Request.Builder()
                 .url(baseHttp.getUrl()+"APIListNew")
                 .post(formBody)
@@ -163,6 +165,7 @@ public class ListAddFragment extends BaseFragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String result = response.body().string();
+                Log.i("result的值",result);
                 resMessage = new Gson().fromJson(result, ResMessage.class);
                 Thread thread = new Thread(new Runnable() {
                     @Override

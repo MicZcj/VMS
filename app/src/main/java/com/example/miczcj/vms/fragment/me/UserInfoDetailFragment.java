@@ -178,9 +178,10 @@ public class UserInfoDetailFragment extends BaseFragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String result = response.body().string();
+                Log.i("result",result);
                 Gson gson = new Gson();
-                resMessage = new Gson().fromJson(result, ResMessage.class);
-                Thread thread = new Thread(new Runnable() {
+                resMessage = gson.fromJson(result, ResMessage.class);
+                new Thread(new Runnable() {
                     @Override
                     public void run() {
                         handler.post(new Runnable() {
@@ -190,8 +191,7 @@ public class UserInfoDetailFragment extends BaseFragment {
                             }
                         });
                     }
-                });
-                thread.start();
+                }).start();
             }
         });
     }

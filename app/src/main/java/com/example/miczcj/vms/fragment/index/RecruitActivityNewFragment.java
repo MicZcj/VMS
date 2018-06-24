@@ -193,6 +193,7 @@ public class RecruitActivityNewFragment extends BaseFragment {
                                 @Override
                                 public void run() {
                                     showResult();
+                                    popBackStack();
                                 }
                             });
                         }

@@ -181,7 +181,7 @@ public class ListBlackFragment extends BaseFragment {
                 .add("num", num)
                 .build();
         Request request = new Request.Builder()
-                .url(baseHttp.getUrl() + "APIAdminDeleteFile")
+                .url(baseHttp.getUrl() + "APIListDelete")
                 .post(formBody)
                 .build();
         okHttpClient.newCall(request).enqueue(new Callback() {
@@ -195,7 +195,7 @@ public class ListBlackFragment extends BaseFragment {
                 String result = response.body().string();
                 Gson gson = new Gson();
                 resMessage = gson.fromJson(result, ResMessage.class);
-                Thread thread = new Thread(new Runnable() {
+                new Thread(new Runnable() {
                     @Override
                     public void run() {
                         handler.post(new Runnable() {
@@ -205,21 +205,20 @@ public class ListBlackFragment extends BaseFragment {
                             }
                         });
                     }
-                });
-                thread.start();
+                }).start();
             }
         });
     }
 
     private void showEditTextDialog(String title) {
-        final QMUIDialog.EditTextDialogBuilder builder = new QMUIDialog.EditTextDialogBuilder(getActivity());
+        final QMUIDialog.MessageDialogBuilder builder = new QMUIDialog.MessageDialogBuilder(getActivity());
         builder.setTitle(title)
-                .setPlaceholder("在此输入活动号")
-                .setInputType(InputType.TYPE_CLASS_NUMBER)
                 .addAction(0, "删除", QMUIDialogAction.ACTION_PROP_NEGATIVE, new QMUIDialogAction.ActionListener() {
                     @Override
                     public void onClick(QMUIDialog dialog, int index) {
                         doPostDel();
+                        dialog.dismiss();
+                        popBackStack();
                     }
                 })
                 .addAction("取消", new QMUIDialogAction.ActionListener() {
